@@ -108,12 +108,21 @@ const jsonLd = {
     />
 
     <!-- JSON-LD structured data (BE-1) -->
-    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)}></script>
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)}></script>
 
     <slot name="head" />
   </head>
 
   <body class="bg-cream-ivory text-warm-charcoal font-body">
+    <!-- Skip navigation — visually hidden until focused by keyboard users -->
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[200] focus:px-4 focus:py-2 focus:bg-deep-forest focus:text-cream-ivory focus:rounded-md focus:text-sm focus:font-medium focus:outline-none focus:ring-2 focus:ring-gold-leaf"
+    >
+      <span class="lang-en">Skip to main content</span>
+      <span class="lang-es">Ir al contenido principal</span>
+    </a>
+
     <slot />
 
     <!-- Lenis smooth scroll + GSAP init -->
@@ -139,9 +148,10 @@ const jsonLd = {
 
       gsap.ticker.lagSmoothing(0);
 
-      (window as Window & { lenis?: Lenis }).lenis = lenis;
-      (window as Window & { gsap?: typeof gsap }).gsap = gsap;
-      (window as Window & { ScrollTrigger?: typeof ScrollTrigger }).ScrollTrigger = ScrollTrigger;
+      // Expose to animation scripts that need to access these after init
+      (window as unknown as Record<string, unknown>).lenis = lenis;
+      (window as unknown as Record<string, unknown>).gsap = gsap;
+      (window as unknown as Record<string, unknown>).ScrollTrigger = ScrollTrigger;
     </script>
   </body>
 </html>

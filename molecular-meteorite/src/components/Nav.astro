@@ -44,7 +44,7 @@ import LanguageToggle from './ui/LanguageToggle.astro';
       <!-- Hamburger (mobile only) -->
       <button
         id="mobile-menu-trigger"
-        class="md:hidden flex flex-col gap-1.5 p-2 rounded-md hover:bg-blush-rose/20 transition-colors"
+        class="md:hidden flex flex-col gap-1.5 p-2.5 rounded-md hover:bg-blush-rose/20 transition-colors min-h-[44px] min-w-[44px] items-center justify-center"
         aria-label="Open menu"
         aria-expanded="false"
         aria-controls="mobile-menu"
@@ -67,6 +67,7 @@ import LanguageToggle from './ui/LanguageToggle.astro';
     nav.setAttribute('data-scrolled', String(scrolled));
     nav.style.backgroundColor = scrolled ? 'rgba(250,246,239,0.95)' : 'transparent';
     nav.style.backdropFilter = scrolled ? 'blur(8px)' : 'none';
+    (nav.style as CSSStyleDeclaration & { webkitBackdropFilter: string }).webkitBackdropFilter = scrolled ? 'blur(8px)' : 'none';
     nav.style.boxShadow = scrolled ? '0 1px 0 rgba(44,74,62,0.08)' : 'none';
   };
 

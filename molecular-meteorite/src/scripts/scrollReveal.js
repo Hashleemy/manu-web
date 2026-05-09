@@ -107,8 +107,8 @@ if (!reduced && testimonialCards.length) {
 
 // ── Contact (FE-2.8) — left fades in, form slides up ─────────────────────────
 revealSplit(
-  document.querySelector('#contact > div > div > div:first-child'),
-  document.querySelector('#contact > div > div > div:last-child'),
+  document.querySelector('#contact .contact-info'),
+  document.querySelector('#contact .contact-form-wrapper'),
   document.getElementById('contact')
 );
 

@@ -8,6 +8,7 @@
   aria-modal="true"
   aria-label="Navigation menu"
   class="fixed inset-0 z-[60] pointer-events-none"
+  inert
 >
   <!-- Backdrop -->
   <div
@@ -24,7 +25,7 @@
     <!-- Close button -->
     <button
       id="mobile-menu-close"
-      class="absolute top-5 right-6 p-2 rounded-full hover:bg-blush-rose/20 transition-colors"
+      class="absolute top-4 right-5 p-3 rounded-full hover:bg-blush-rose/20 transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"
       aria-label="Close menu"
     >
       <svg viewBox="0 0 24 24" width="20" height="20" stroke="#2C4A3E" stroke-width="2" stroke-linecap="round" fill="none" aria-hidden="true">
@@ -75,6 +76,7 @@
 
   function openMenu() {
     isOpen = true;
+    menu.removeAttribute('inert');
     menu.style.pointerEvents = 'auto';
     backdrop.style.opacity = '1';
     panel.style.transform = 'translateX(0)';
@@ -85,6 +87,7 @@
 
   function closeMenu() {
     isOpen = false;
+    menu.setAttribute('inert', '');
     menu.style.pointerEvents = 'none';
     backdrop.style.opacity = '0';
     panel.style.transform = 'translateX(100%)';
@@ -99,6 +102,16 @@
   mobileLinks.forEach((link) => link.addEventListener('click', closeMenu));
 
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && isOpen) closeMenu();
+    if (e.key === 'Escape' && isOpen) { closeMenu(); return; }
+    if (e.key === 'Tab' && isOpen) {
+      const focusable = [...panel.querySelectorAll<HTMLElement>('a[href], button:not([disabled])')];
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault(); last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault(); first.focus();
+      }
+    }
   });
 </script>
