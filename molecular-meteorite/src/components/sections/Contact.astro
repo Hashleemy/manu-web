@@ -1,19 +1,31 @@
 ---
 import { en } from '../../i18n/en.js';
 import { es } from '../../i18n/es.js';
+import BougainvilleaPetal from '../BougainvilleaPetal.astro';
 ---
 
 <!--
   Contact section — split layout: info left, Netlify form right.
   Uses .lang-en / .lang-es CSS toggle throughout so all labels switch on language change.
-  FE-2.8 (structure) + BE-2 (Netlify Forms + honeypot) complete.
+  FE-2.8 (structure) + BE-2 (Netlify Forms + honeypot) complete. FE-4.4 visual accents added.
 -->
 <section id="contact" class="section-padding bg-cream-ivory">
   <div class="section-wrapper">
     <div class="contact-grid grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
 
       <!-- LEFT: Contact info -->
-      <div class="contact-info space-y-8">
+      <div class="contact-info relative space-y-8">
+
+        <!-- Decorative BougainvilleaPetal accents -->
+        <div class="absolute -top-8 right-4 pointer-events-none select-none" aria-hidden="true" style="transform: rotate(-28deg); opacity: 0.18;">
+          <BougainvilleaPetal size={72} color="#E8B4B8" />
+        </div>
+        <div class="absolute top-1/2 -right-2 pointer-events-none select-none" aria-hidden="true" style="transform: rotate(45deg); opacity: 0.12;">
+          <BougainvilleaPetal size={48} color="#C9A96E" />
+        </div>
+        <div class="absolute bottom-4 right-12 pointer-events-none select-none" aria-hidden="true" style="transform: rotate(-70deg); opacity: 0.14;">
+          <BougainvilleaPetal size={36} color="#E8B4B8" />
+        </div>
         <div>
           <h2 class="heading-display text-4xl lg:text-5xl text-deep-forest text-balance-bi">
             <span class="lang-en">{en.contact.heading}</span>

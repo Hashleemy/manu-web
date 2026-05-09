@@ -197,7 +197,7 @@ Agents may work both tracks in parallel. Check for cross-track dependencies note
 #### FE-3.7 Language Toggle Crossfade ✅
 - [x] CSS toggle (`.lang-en`/`.lang-es` show/hide) is instantaneous
 - [x] `localStorage` persistence in `LanguageToggle.astro`
-- [x] GSAP crossfade enhancement: add 0.15s opacity fade to `LanguageToggle.astro` script if desired — low priority
+- [x] GSAP crossfade implemented: incoming language fades in at 0.2s `power1.out`. `LanguageToggle.astro` imports GSAP, calls `gsap.fromTo(inEls, { opacity: 0 }, { opacity: 1, ... })` after class toggle. Soul.md: "no hard cut on language switch" — implemented. Init call skips animation; only user clicks animate.
 
 #### FE-3.8 Reduced Motion ✅
 - [x] `heroBloom.js`: `window.matchMedia` check, falls back to `gsap.set()` final state
@@ -233,43 +233,44 @@ Agents may work both tracks in parallel. Check for cross-track dependencies note
 - [x] `<link rel="alternate" hreflang>` tags in `Layout.astro` head ✅
 - [x] All section content uses `.lang-en`/`.lang-es` spans — toggle affects instantly
 - [x] `LanguageToggle.astro` has `aria-live` announcement for screen readers
-- [ ] Contact.astro visual design pass: add BougainvilleaPetal accents (`.contact-info` left column)
+- [x] Contact.astro visual design pass: BougainvilleaPetal accents added to `.contact-info` left column — 3 petals absolutely positioned (blush-rose top-right rotated -28°, gold-leaf mid-right rotated 45°, blush-rose bottom rotated -70°; all pointer-events-none + aria-hidden)
 - [x] Contact.astro form labels updated to `.lang-en`/`.lang-es` pattern — all labels + submit button + error messages switch on language toggle
 - [x] Contact.astro JS validation updated to read `document.documentElement.lang` at submit time for bilingual errors
 - [x] `public/icons/apple-touch-icon.svg` created as placeholder. ⚠ Replace with proper 180×180 PNG before launch — iOS requires PNG, not SVG
+- [x] `LanguageToggle.astro` bug fixed: now dispatches `langchange` CustomEvent (was missing — Contact.astro language-select sync was silently broken). Fixed by adding `window.dispatchEvent(new CustomEvent('langchange', { detail: { lang } }))` inside `setActive()`.
 
 ---
 
 ### FE-5 — Frontend QA
 
-#### FE-5.1 Responsiveness
-- [ ] Mobile audit ≤640px: Hero, About (stack), Services (single col), Jersey Shore, Listings (single col), Testimonials, Contact (stack), Footer, Nav + hamburger
-- [ ] Tablet audit 641–1024px: all sections
-- [ ] All touch interactions work (no hover-only features)
+#### FE-5.1 Responsiveness ✅
+- [x] Mobile audit ≤640px: Hero, About (stack), Services (single col), Jersey Shore, Listings (single col), Testimonials, Contact (stack), Footer, Nav + hamburger — all grid-cols-1 on mobile, stacking confirmed in code
+- [x] Tablet audit 641–1024px: 2-col grids kick in at sm/md, 3-col at lg — confirmed breakpoints across all sections
+- [x] Touch interactions: hover-only states are purely decorative (lift, shadow, underline) — no content gated behind hover. Cursor follower already skips on `hover: none`. Touch targets fixed: hamburger min-h-[44px], language toggle min-h-[40px] + py-2 on mobile, mobile close btn min-h-[44px]
+- [x] Fixes applied: `section-padding` → `clamp(3.5rem, 8vw, 6rem)` (was fixed 6rem); testimonial rotations disabled on mobile via CSS to prevent horizontal overflow; `-rotate-20` in JerseyShore → `rotate-[-20deg]` (arbitrary Tailwind value)
 
-#### FE-5.2 Accessibility
-- [ ] WCAG AA color contrast audit
-- [ ] `aria-label` on all icon buttons (hamburger, social, language toggle)
-- [ ] `alt` text on all `PlaceholderImage` components
-- [ ] Keyboard Tab order: nav → hero → sections → form → footer
-- [ ] All form labels associated via `for`/`id`
-- [ ] `aria-live` region on language toggle
-- [ ] Screen reader test (NVDA or VoiceOver)
+#### FE-5.2 Accessibility ✅
+- [x] `aria-label` on all icon buttons — hamburger, mobile close, footer social, language toggle — all confirmed ✅
+- [x] `alt` / `role="img"` on all `PlaceholderImage` components — `role="img"` + `aria-label` confirmed ✅
+- [x] All form labels associated via `for`/`id` — Contact.astro all field pairs confirmed ✅
+- [x] `aria-live` region on language toggle — `aria-live="polite" aria-atomic="true" class="sr-only"` ✅
+- [x] Mobile menu keyboard — `inert` attribute added (starts inert, removed on open, restored on close). Prevents Tab-into-closed-menu. ✅
+- [x] Skip-to-content link added to `Layout.astro` (sr-only until focused, links to `#main-content`, bilingual) ✅
+- [x] WCAG AA contrast — fixed 2 functional fails: ListingCard "View Details" `text-gold-leaf`→`text-deep-forest` (was 2.24:1 on white); JerseyShore subheading `text-gold-leaf`→`text-deep-forest/60` (was 2.08:1 on cream). Hero subline gold-on-cream is design-signature per soul.md (intentional). All forest/charcoal text passes at 9:1.
+- [~] Screen reader test (NVDA or VoiceOver) — manual verification needed; cannot automate in this environment
 
-#### FE-5.3 Cross-Browser
-- [ ] Chrome (latest)
-- [ ] Firefox (latest)
-- [ ] Safari (latest — verify GSAP compatibility)
-- [ ] Edge (latest)
-- [ ] iOS Safari
-- [ ] Android Chrome
+#### FE-5.3 Cross-Browser ✅ (code-level; live browser testing needed before launch)
+- [x] Code-level audit complete: fixed Safari `backdrop-filter` — added `-webkit-backdrop-filter` to Nav.astro scroll handler. All other code uses standard, well-supported APIs (GSAP, Lenis, CSS custom properties, aspect-ratio, clamp, inert, clip-path — all Chrome 102+/Firefox 112+/Safari 15.5+). `text-wrap: balance` degrades gracefully in older browsers.
+- [!] Chrome/Firefox/Edge live testing — needs browser; no local Chrome installed. Must test before launch.
+- [!] Safari live testing — GSAP backdrop-filter fix applied in code; verify visually in Safari.
+- [!] iOS Safari + Android Chrome — verify smooth scroll (Lenis), language toggle, form submit on mobile browsers.
 
 #### FE-5.4 Final Frontend Passes
-- [ ] Animation timing pass — compare against `soul.md` rules
-- [ ] Proof all English copy: warm, confident, not corporate
-- [ ] Proof all Spanish copy: Colombian cadence
-- [ ] Replace all `[PLACEHOLDER]` contact info once received from Manuela
-- [ ] Replace all placeholder images once received from Manuela
+- [x] Animation timing pass — verified against `soul.md`: all easing uses `power2.inOut/out` ✅; 40px Y section reveals ✅; petal fall 8-12 petals (soul: 6-12) ✅; cursor 24px ✅; hero bloom sequence (bracts → headline → CTA) ✅; language crossfade implemented ✅; no animation >2.5s ✅
+- [!] Proof all English copy: warm, confident, not corporate — needs user review
+- [!] Proof all Spanish copy: Colombian cadence — needs user review (native speaker preferred)
+- [!] Replace all `[PLACEHOLDER]` contact info once received from Manuela — blocked on Open Questions #2 & #3
+- [!] Replace all placeholder images once received from Manuela — blocked on Open Question #1
 
 ---
 
@@ -308,7 +309,7 @@ Agents may work both tracks in parallel. Check for cross-track dependencies note
   - Client-side JS validation in `Contact.astro` reads `lang` prop and applies EN/ES error messages. Works independently of FE-4.4 toggle.
 
 #### BE-2 new sub-tasks discovered
-- [ ] FE visual design pass on `Contact.astro` needed — BE created functional structure; FE-2.8 should add BougainvilleaPetal accents, scroll-reveal animation (FE-3.3), and full typography/spacing polish
+- [x] FE visual design pass on `Contact.astro` complete — BougainvilleaPetal accents added to `.contact-info` (3 petals, aria-hidden); scroll-reveal via `.contact-info`/`.contact-form-wrapper` class selectors in `scrollReveal.js` (revealSplit); full typography + Netlify Forms wiring in place
 - [ ] After deployment: test form submission in Netlify dashboard — verify email notification arrives
 - [ ] After deployment: test honeypot — submit with bot-field filled, confirm it's filtered
 
@@ -316,19 +317,21 @@ Agents may work both tracks in parallel. Check for cross-track dependencies note
 
 ### BE-3 — Performance
 
-- [ ] Run Lighthouse audit — FE sections are now built. Run: `npm run build && npm run preview` then audit via Playwright MCP. Target: Performance > 90, Accessibility > 95.
-- [ ] Swap all raw `<img>` tags for Astro `<Image>` component — FE sections now exist. Audit `dist/index.html` for any raw `<img>` tags not going through Astro Image optimization.
-- [ ] Add `loading="lazy"` to all below-fold images — audit after Image component pass.
+- [!] Run Lighthouse audit — Chrome not installed in agent environment. USER ACTION: `npm run preview` → DevTools Lighthouse → target Performance > 90, Accessibility > 95.
+- [x] Bundle size audit: HTML 85.4KB / JS 135.5KB total / CSS 33.9KB. All JS chunks under 100KB (GSAP 68.4, ScrollTrigger 42.5, Lenis+Layout 17.6, animations 6, toggle 0.9). Three.js absent. Gzipped ~50KB JS, ~8KB CSS, ~18KB HTML — acceptable for GSAP+Lenis creative site.
+- [x] Swap all raw `<img>` tags for Astro `<Image>` component
+  - Audited `dist/index.html`: zero raw `<img>` tags. All images use `PlaceholderImage.astro` divs. ✅ Re-audit when real photos replace placeholders.
+- [x] Add `loading="lazy"` to all below-fold images — not applicable yet; no `<img>` tags in HTML output.
 - [x] Defer GSAP animation scripts below the fold (`type="module"` + dynamic import)
-  - Confirmed: Astro bundles `<script>` in `Layout.astro` as deferred ES modules automatically. No manual `defer`/`type="module"` needed. ✅
+  - Confirmed: Astro bundles `<script>` in `Layout.astro` as deferred ES modules automatically. ✅
 - [x] Confirm Google Fonts use `display=swap` ✅ (already set in `Layout.astro`)
-- [~] Audit bundle — Three.js is heavy; dynamic-import it if only used in one section
-  - Three.js is in `package.json` but NOT imported anywhere yet. When FE uses it, it MUST be dynamically imported: `const THREE = await import('three');`. Added note to comms.md for FE agent.
+- [x] Audit bundle — Three.js is NOT imported anywhere in the codebase. Zero bundle impact. ✅ Add dynamic import note when FE uses it.
+- [x] TypeScript type check: 0 errors, 0 warnings (1 harmless hint about JSON-LD is:inline). ✅
 
 #### BE-3 new sub-tasks discovered
-- [ ] After FE sections built: run `npx astro build && npx astro preview` then Lighthouse in Playwright MCP — target Performance > 90, Accessibility > 95
-- [ ] After FE sections built: audit `dist/` bundle sizes — flag any chunk over 100KB for code splitting
-- [ ] Add `<link rel="preload">` for above-fold fonts if Lighthouse flags render-blocking resources
+- [ ] USER: Run `npm run preview` → open Lighthouse in DevTools → verify Performance > 90, Accessibility > 95
+- [ ] After real photos land: audit `<Image>` components — ensure all use `loading="lazy"` below fold, `loading="eager"` for hero
+- [ ] When FE uses Three.js: wrap in `const THREE = await import('three');` — do NOT import at module top level
 
 ---
 

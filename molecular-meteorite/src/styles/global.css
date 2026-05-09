@@ -52,7 +52,7 @@ body {
 }
 
 .section-padding {
-  padding-block: var(--spacing-section);
+  padding-block: clamp(3.5rem, 8vw, 6rem);
 }
 
 /* ── Typography helpers ── */
@@ -122,6 +122,13 @@ html.is-es .heading-display { letter-spacing: -0.015em; }
 .bilingual-text {
   overflow-wrap: break-word;
   hyphens: auto;
+}
+
+/* ── Mobile: remove testimonial card rotation to prevent horizontal overflow ── */
+@media (max-width: 639px) {
+  .testimonial-card {
+    transform: none !important;
+  }
 }
 
 /* ── Reduced motion ── */

@@ -28,6 +28,8 @@
 
 [AGENT-FE] [2026-05-09] — FE-1 and FE-2 complete. Design system: bilingual CSS toggle, 6 SVG components (BougainvilleaFull, Petal, CoastalWildflower, FlowerStem, WaveDivider, ServiceIcon), all 7 UI components (Button, Card, BerkshireBadge, LanguageToggle, PlaceholderImage, Nav, MobileMenu). All 9 page sections built and wired in index.astro. Build clean (890ms, 0 errors). Discovered: Contact.astro was already built by BE agent with Netlify Forms wiring — kept as-is, noted that form labels need CSS toggle pass in FE-4.4. Three.js not yet used anywhere — must be dynamic-imported when needed. Moving to FE-3 animations next.
 
+[CLAUDE] [2026-05-09] — FE-5 QA complete (code-level). FE-5.1 Responsiveness: section-padding now clamp(3.5rem,8vw,6rem); testimonial rotation disabled on mobile to prevent overflow; -rotate-20 → rotate-[-20deg] in JerseyShore; hamburger/language-toggle/mobile-close touch targets bumped to ≥40-44px. FE-5.2 Accessibility: skip-to-content link added to Layout.astro; mobile menu now uses `inert` attribute (was keyboard-reachable when closed); WCAG contrast fixed on ListingCard "View Details" link (text-deep-forest, was 2.24:1 gold on white) and JerseyShore subheading (text-deep-forest/60, was 2.08:1 gold on cream). FE-5.3 Cross-Browser: added -webkit-backdrop-filter to Nav.astro for Safari. BE-3 bundle audit: HTML 85.4KB / JS 135.5KB / CSS 33.9KB — all clean, no chunk over 100KB, Three.js absent. Build: 866ms, 0 errors. Remaining blocked items: Lighthouse (Chrome not in env — USER ACTION needed), browser live testing, copy/image review (awaiting Manuela's assets), and BE-4 deployment (USER ACTION: git push + Netlify connect).
+
 ---
 
 ## DECISIONS LOG
