@@ -1,0 +1,41 @@
+---
+import TestimonialCard from '../ui/TestimonialCard.astro';
+import WaveDivider from '../WaveDivider.astro';
+import { testimonials } from '../../data/testimonials.js';
+import { en } from '../../i18n/en.js';
+import { es } from '../../i18n/es.js';
+
+// Slight rotations — scattered petal feel. Alternating per soul.md
+const rotations = [-1.5, 1, -0.8, 1.5, -1];
+---
+
+<WaveDivider fill="#2C4A3E" />
+
+<section id="testimonials" class="section-padding bg-deep-forest overflow-hidden">
+  <div class="section-wrapper">
+
+    <!-- Section heading -->
+    <div class="text-center mb-14">
+      <h2 class="heading-display text-4xl md:text-5xl text-cream-ivory text-balance-bi">
+        <span class="lang-en">{en.testimonials.heading}</span>
+        <span class="lang-es">{es.testimonials.heading}</span>
+      </h2>
+    </div>
+
+    <!-- Scattered cards -->
+    <div class="testimonials-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+      {testimonials.map((t, i) => (
+        <TestimonialCard
+          quoteEn={t.quote_en}
+          quoteEs={t.quote_es}
+          name={t.name}
+          location={t.location}
+          rotation={rotations[i % rotations.length]}
+        />
+      ))}
+    </div>
+
+  </div>
+</section>
+
+<WaveDivider fill="#FAF6EF" flipped />

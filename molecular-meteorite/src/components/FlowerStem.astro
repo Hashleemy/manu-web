@@ -1,0 +1,51 @@
+---
+interface Props {
+  class?: string;
+  size?: number | string;
+  'aria-hidden'?: boolean | 'true' | 'false';
+}
+const { class: className = '', size = 240, 'aria-hidden': ariaHidden = true } = Astro.props;
+---
+
+<!-- Decorative flower stem — used as parallax background element in hero -->
+<svg
+  viewBox="0 0 80 280"
+  width={typeof size === 'number' ? Math.round((size as number) * 0.33) : size}
+  height={size}
+  class={className}
+  aria-hidden={ariaHidden}
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <!-- Main stem — gentle S-curve -->
+  <path
+    d="M 42 276 C 44 240 34 200 38 160 C 42 120 36 80 40 40 C 42 18 44 8 46 4"
+    stroke="#2C4A3E"
+    stroke-width="2.5"
+    stroke-linecap="round"
+    fill="none"
+  />
+
+  <!-- Leaf 1 — right, lower -->
+  <path
+    d="M 38 188 C 60 172 72 162 62 178 C 54 190 42 192 38 188 Z"
+    fill="#2C4A3E"
+    opacity="0.65"
+  />
+
+  <!-- Leaf 2 — left, mid -->
+  <path
+    d="M 38 124 C 18 108 10 98 20 114 C 28 126 36 128 38 124 Z"
+    fill="#2C4A3E"
+    opacity="0.5"
+  />
+
+  <!-- Leaf 3 — right, upper -->
+  <path
+    d="M 40 66 C 58 52 66 44 58 58 C 52 68 42 70 40 66 Z"
+    fill="#2C4A3E"
+    opacity="0.4"
+  />
+
+  <!-- Small bud at top -->
+  <ellipse cx="46" cy="8" rx="4" ry="7" fill="#E8B4B8" opacity="0.7" />
+</svg>

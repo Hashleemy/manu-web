@@ -1,0 +1,63 @@
+---
+interface Props {
+  type: 'buying' | 'selling' | 'relocation';
+  class?: string;
+  size?: number | string;
+  color?: string;
+}
+const { type, class: className = '', size = 56, color = '#2C4A3E' } = Astro.props;
+---
+
+<svg
+  viewBox="0 0 60 60"
+  width={size}
+  height={size}
+  class={className}
+  aria-hidden="true"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  {type === 'buying' && (
+    <g stroke={color} stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none">
+      <!-- House outline -->
+      <path d="M 8 30 L 30 12 L 52 30" />
+      <path d="M 14 30 L 14 50 L 46 50 L 46 30" />
+      <!-- Arched door -->
+      <path d="M 23 50 L 23 38 Q 23 34 30 34 Q 37 34 37 38 L 37 50" />
+      <!-- Window -->
+      <rect x="19" y="34" width="8" height="7" rx="1" stroke-width="1.4" />
+      <!-- Petal accent — top right, marks this as "home found" -->
+      <path d="M 47 16 C 45 10 48 5 53 8 C 55 13 52 18 47 16 Z" fill={color} opacity="0.55" stroke="none" />
+      <path d="M 54 8 C 51 12 48 14 47 16" stroke-width="1" opacity="0.4" />
+    </g>
+  )}
+
+  {type === 'selling' && (
+    <g stroke={color} stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none">
+      <!-- House outline (slightly smaller, left-aligned) -->
+      <path d="M 6 32 L 26 16 L 46 32" />
+      <path d="M 12 32 L 12 50 L 40 50 L 40 32" />
+      <!-- Door -->
+      <path d="M 21 50 L 21 39 L 31 39 L 31 50" />
+      <!-- Growth arrow — suggesting value/sale -->
+      <path d="M 50 48 L 50 22 M 44 28 L 50 22 L 56 28" />
+      <!-- Small leaf on arrow shaft -->
+      <path d="M 52 36 C 58 30 58 24 54 28" fill={color} opacity="0.45" stroke-width="1.4" />
+    </g>
+  )}
+
+  {type === 'relocation' && (
+    <g stroke={color} stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none">
+      <!-- Compass circle -->
+      <circle cx="30" cy="30" r="22" />
+      <!-- Cardinal tick marks -->
+      <path d="M 30 10 L 30 16 M 30 44 L 30 50 M 10 30 L 16 30 M 44 30 L 50 30" stroke-width="1.4" />
+      <!-- North pointer (filled — the direction she guides you) -->
+      <path d="M 30 14 L 33 27 L 30 24 L 27 27 Z" fill={color} stroke="none" />
+      <!-- South pointer (outline) -->
+      <path d="M 30 46 L 33 33 L 30 36 L 27 33 Z" fill={color} opacity="0.25" stroke="none" />
+      <!-- Center flower -->
+      <circle cx="30" cy="30" r="4" fill={color} opacity="0.6" stroke="none" />
+      <circle cx="30" cy="30" r="2" fill="#C9A96E" stroke="none" />
+    </g>
+  )}
+</svg>

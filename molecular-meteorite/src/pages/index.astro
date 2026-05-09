@@ -1,14 +1,39 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import MobileMenu from '../components/MobileMenu.astro';
+import Hero from '../components/sections/Hero.astro';
+import About from '../components/sections/About.astro';
+import Services from '../components/sections/Services.astro';
+import JerseyShore from '../components/sections/JerseyShore.astro';
+import Listings from '../components/sections/Listings.astro';
+import Testimonials from '../components/sections/Testimonials.astro';
+import Contact from '../components/sections/Contact.astro';
+import Footer from '../components/sections/Footer.astro';
 ---
 
 <Layout>
-  <main>
-    <!-- Phase 3 sections will be assembled here -->
-    <div class="section-wrapper section-padding grid place-items-center min-h-screen">
-      <p class="heading-accent text-2xl text-gold-leaf">
-        Manuela Maria — coming soon.
-      </p>
-    </div>
+  <Nav />
+  <MobileMenu />
+
+  <main id="main-content">
+    <Hero />
+    <About />
+    <Services />
+    <JerseyShore />
+    <Listings />
+    <Testimonials />
+    <Contact />
   </main>
+
+  <Footer />
 </Layout>
+
+<!-- FE-3 Animation scripts (deferred ES modules — Astro bundles these) -->
+<script>
+  import '../scripts/heroBloom.js';
+  import '../scripts/scrollReveal.js';
+  import '../scripts/petalFall.js';
+  import '../scripts/cursorFollower.js';
+  import '../scripts/parallax.js';
+</script>

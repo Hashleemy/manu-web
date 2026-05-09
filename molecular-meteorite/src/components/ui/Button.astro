@@ -1,0 +1,40 @@
+---
+interface Props {
+  variant?: 'primary' | 'secondary';
+  href?: string;
+  labelEn: string;
+  labelEs: string;
+  class?: string;
+  type?: 'button' | 'submit' | 'reset';
+  'data-form-submit'?: boolean;
+}
+const {
+  variant = 'primary',
+  href,
+  labelEn,
+  labelEs,
+  class: className = '',
+  type = 'button',
+} = Astro.props;
+
+const base = 'inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full font-body font-medium text-sm tracking-wide transition-all duration-300 cursor-pointer select-none focus-visible:outline-2 focus-visible:outline-offset-2';
+
+const variants = {
+  primary: 'bg-deep-forest text-cream-ivory hover:bg-gold-leaf hover:text-deep-forest focus-visible:outline-deep-forest',
+  secondary: 'bg-transparent border border-deep-forest text-deep-forest hover:bg-deep-forest hover:text-cream-ivory focus-visible:outline-deep-forest',
+};
+
+const classes = `${base} ${variants[variant]} ${className}`;
+---
+
+{href ? (
+  <a href={href} class={classes}>
+    <span class="lang-en">{labelEn}</span>
+    <span class="lang-es">{labelEs}</span>
+  </a>
+) : (
+  <button type={type} class={classes}>
+    <span class="lang-en">{labelEn}</span>
+    <span class="lang-es">{labelEs}</span>
+  </button>
+)}

@@ -1,0 +1,29 @@
+---
+interface Props {
+  fill?: string;
+  flipped?: boolean;
+  class?: string;
+  height?: number;
+}
+const {
+  fill = '#FAF6EF',
+  flipped = false,
+  class: className = '',
+  height = 72,
+} = Astro.props;
+---
+
+<!-- SVG wave — used between sections as organic transition. flip=true for top-of-section use. -->
+<div class={`wave-divider ${className}`} aria-hidden="true">
+  <svg
+    viewBox="0 0 1440 72"
+    preserveAspectRatio="none"
+    style={`display: block; width: 100%; height: ${height}px;${flipped ? ' transform: scaleY(-1);' : ''}`}
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M0,42 C180,8 360,72 540,42 C720,8 900,72 1080,42 C1260,8 1380,52 1440,42 L1440,72 L0,72 Z"
+      fill={fill}
+    />
+  </svg>
+</div>

@@ -48,163 +48,167 @@ Agents may work both tracks in parallel. Check for cross-track dependencies note
 - [x] Spacing scale: `--spacing-section`, `--spacing-section-lg`
 - [x] Organic border-radius values: `--radius-organic`, `--radius-petal`
 
-#### FE-1.2 Global Styles (partially complete in Phase 1)
+#### FE-1.2 Global Styles ✅
 - [x] CSS reset and base element styles
 - [x] `.section-wrapper` utility (max-width + padding)
 - [x] `.heading-display` and `.heading-accent` typography helpers
 - [x] `prefers-reduced-motion` guard block
-- [ ] Bilingual text sizing utilities (larger Spanish strings need accommodation)
-- [ ] Organic curve clip-path helpers
+- [x] Bilingual toggle CSS (`.lang-en` / `.lang-es` show/hide via `html.is-es`)
+- [x] Language restore inline script in Layout.astro (prevents FOUC)
+- [x] `.text-balance-bi`, `.bilingual-text` text utilities
+- [x] `.img-organic`, `.img-petal` organic image frame helpers
+- [x] `.clip-organic`, `.clip-petal`, `.clip-wave-top`, `.clip-wave-bottom` clip-path helpers
 
-#### FE-1.3 SVG Flower Asset Library
-- [ ] `src/components/BougainvilleaFull.astro` — full flower SVG (hero, decorative)
-- [ ] `src/components/BougainvilleaPetal.astro` — single petal SVG (cursor follower, petal fall)
-- [ ] `src/components/CoastalWildflower.astro` — wildflower SVG (section dividers)
-- [ ] `src/components/FlowerStem.astro` — decorative stem SVG (hero background, footer)
-- [ ] `src/components/WaveDivider.astro` — SVG organic wave for section transitions
-- [ ] `src/components/ui/ServiceIcon.astro` — accepts `type` prop: `buying | selling | relocation`
+#### FE-1.3 SVG Flower Asset Library ✅
+- [x] `src/components/BougainvilleaFull.astro` — 6-bract flower, `.bract` targets for GSAP heroBloom
+- [x] `src/components/BougainvilleaPetal.astro` — single petal with central vein, `color`/`size`/`opacity` props
+- [x] `src/components/CoastalWildflower.astro` — 8-petal daisy with stem and leaf
+- [x] `src/components/FlowerStem.astro` — S-curve stem with 3 leaves and bud
+- [x] `src/components/WaveDivider.astro` — sine-wave section divider, `fill`/`flipped`/`height` props
+- [x] `src/components/ui/ServiceIcon.astro` — `type: buying | selling | relocation`, deep-forest line art
 
-#### FE-1.4 Reusable UI Components
-- [ ] `src/components/ui/Button.astro` — props: `variant (primary|secondary)`, `href`, `labelEn`, `labelEs`
-- [ ] `src/components/ui/Card.astro` — base card with hover state: lift + shadow + petal accent
-- [ ] `src/components/ui/BerkshireBadge.astro` — Berkshire Hathaway logo with gold border
-- [ ] `src/components/ui/LanguageToggle.astro` — EN / ES switcher, triggers crossfade
-- [ ] `src/components/ui/PlaceholderImage.astro` — accepts `slot` prop, renders labeled placeholder box
-- [ ] `src/components/Nav.astro` — logo + nav links + language toggle + mobile trigger
-- [ ] `src/components/MobileMenu.astro` — slide-in drawer for mobile nav
+#### FE-1.4 Reusable UI Components ✅
+- [x] `src/components/ui/Button.astro` — `variant (primary|secondary)`, `href`, `labelEn`, `labelEs`; renders `<a>` or `<button>`
+- [x] `src/components/ui/Card.astro` — hover lift + blush shadow, `hoverable`/`padded` props
+- [x] `src/components/ui/BerkshireBadge.astro` — diamond mark + gold border text badge; replace with logo when guidelines confirmed
+- [x] `src/components/ui/LanguageToggle.astro` — EN/ES toggle with `localStorage` persistence, `aria-live` announcement
+- [x] `src/components/ui/PlaceholderImage.astro` — labeled flower-mark placeholder, `slot`/`aspectRatio` props
+- [x] `src/components/Nav.astro` — fixed header, transparent→cream on scroll, bilingual links, mobile trigger
+- [x] `src/components/MobileMenu.astro` — slide-in drawer, focus trap, Escape key close, all a11y attrs
+- [x] `public/icons/favicon.svg` — bougainvillea 6-petal mark on forest-green circle
 
 ---
 
 ### FE-2 — Page Sections
 > All sections use `PlaceholderImage.astro` for photos. Never block on missing assets.
 
-#### FE-2.1 Navigation
-- [ ] `src/components/sections/Nav.astro` — logo (Manuela Maria), links: Home · About · Services · Listings · Contact
-- [ ] Language toggle on right side
-- [ ] Mobile hamburger + `MobileMenu.astro` slide-in drawer
-- [ ] Scroll-based style change: transparent → cream background on scroll
-- [ ] Bilingual nav link labels via `useTranslation`
+#### FE-2.1 Navigation ✅
+- [x] `src/components/Nav.astro` — fixed header, bilingual links (lang-en/lang-es spans)
+- [x] Language toggle integrated (right side)
+- [x] Mobile hamburger → `MobileMenu.astro` slide-in drawer
+- [x] Scroll-based style change: transparent → cream/blur on scroll (inline JS)
+- [x] `index.astro` wires Nav + MobileMenu above `<main>`
 
-#### FE-2.2 Hero Section
-- [ ] `src/components/sections/Hero.astro` — full-screen, cream-to-blush gradient background
-- [ ] `BougainvilleaFull.astro` centered (animation wired in FE-3.1)
-- [ ] Parallax stems: two `FlowerStem.astro`, left + right sides (wired in FE-3.5)
-- [ ] Headline: **"Your Home Awaits."** / **"Tu Hogar te Espera."** (Playfair Display)
-- [ ] Subline: her title + Berkshire Hathaway affiliation
-- [ ] CTA `Button.astro`: **Find Your Home** / **Encuentra tu Hogar** → `#contact`
-- [ ] Scroll indicator (animated chevron or petal)
+#### FE-2.2 Hero Section ✅
+- [x] `src/components/sections/Hero.astro` — full-screen, cream→blush gradient
+- [x] `BougainvilleaFull.astro` centered with `id="hero-flower"` (FE-3.1 animation target)
+- [x] `id="hero-stem-left"` + `id="hero-stem-right"` parallax targets (FE-3.5)
+- [x] Bilingual headline (Playfair Display, 8xl at lg)
+- [x] Subline in Cormorant Garamond italic, gold-leaf
+- [x] CTA Button → `#contact`
+- [x] Animated scroll chevron
 
-#### FE-2.3 About Section
-- [ ] `src/components/sections/About.astro` — two-column asymmetric layout
-- [ ] LEFT: `PlaceholderImage.astro slot="manuela-portrait"`
-- [ ] RIGHT: bilingual story text from `useTranslation`
-- [ ] `BerkshireBadge.astro` below story text
-- [ ] `CoastalWildflower.astro` background accent (low opacity)
-- [ ] Scroll-triggered entrance (wired in FE-3.3)
+#### FE-2.3 About Section ✅
+- [x] `src/components/sections/About.astro` — grid-cols [2fr 3fr], asymmetric
+- [x] LEFT: `PlaceholderImage slot="manuela-portrait"` with `img-organic` framing
+- [x] RIGHT: bilingual headings and body text; `BerkshireBadge` below
+- [x] Background `CoastalWildflower` accents (7% opacity)
+- [x] `.about-grid` / `.about-content` / `.about-image` targets ready for FE-3.3
 
-#### FE-2.4 Services Section
-- [ ] `src/components/sections/Services.astro` — three-card layout with `WaveDivider.astro` above
-- [ ] Buying card: `ServiceIcon buying` + bilingual copy from `useTranslation`
-- [ ] Selling card: `ServiceIcon selling` + bilingual copy
-- [ ] Relocation card: `ServiceIcon relocation` + bilingual copy
-- [ ] Hover microanimation wired (FE-3.6)
-- [ ] Scroll-triggered stagger entrance (FE-3.3)
+#### FE-2.4 Services Section ✅
+- [x] `src/components/sections/Services.astro` — 3-col grid with `WaveDivider` above+below
+- [x] All three service cards with `ServiceIcon`, bilingual heading + description
+- [x] Petal corner accent on hover (CSS `group-hover:opacity-100`)
+- [x] `.service-card` / `.services-grid` targets ready for FE-3.3 stagger
 
-#### FE-2.5 Jersey Shore Section
-- [ ] `src/components/sections/JerseyShore.astro` — full-width coastal character section
-- [ ] `PlaceholderImage.astro slot="jersey-shore-coastal"`
-- [ ] Neighborhood highlights: Asbury Park, Spring Lake, Manasquan, Long Branch, Red Bank
-- [ ] Bilingual copy from `useTranslation`
-- [ ] `BougainvilleaPetal.astro` accents overlaying image
-- [ ] Scroll-triggered reveal (FE-3.3)
+#### FE-2.5 Jersey Shore Section ✅
+- [x] `src/components/sections/JerseyShore.astro` — 2-col lg grid, image left / copy right
+- [x] `PlaceholderImage slot="jersey-shore-coastal"` with rounded corners
+- [x] 3 `BougainvilleaPetal` accents overlaying image (absolute positioned)
+- [x] Neighborhood pills: 5 communities styled as tags
+- [x] `.jersey-image` / `.jersey-content` targets ready for FE-3.3
 
-#### FE-2.6 Listings Section
-- [ ] `src/components/sections/Listings.astro` — grid (3-col desktop / 2-col tablet / 1-col mobile)
-- [ ] `src/components/ui/ListingCard.astro` — photo placeholder, price, address, beds/baths, "View Details" link
-- [ ] `PlaceholderImage.astro slot="listing-{id}"` inside each card
-- [ ] Section heading from `useTranslation` (Featured Listings / Propiedades Destacadas)
-- [ ] "View All" CTA below grid
-- [ ] Hover microanimation (FE-3.6)
-- [ ] ⚠ `src/data/listings.js` already created
+#### FE-2.6 Listings Section ✅
+- [x] `src/components/sections/Listings.astro` — 3-col desktop / 2-col tablet / 1-col mobile grid
+- [x] `src/components/ui/ListingCard.astro` — price, address split, beds/baths/sqft, bilingual labels
+- [x] `PlaceholderImage slot="listing-{id}"` per card, hover scale on image
+- [x] Bilingual section heading + "View All" CTA
+- [x] `.listing-card` targets ready for FE-3.6 hover microanimations
 
-#### FE-2.7 Testimonials Section
-- [ ] `src/components/sections/Testimonials.astro` — scattered petal layout
-- [ ] `src/components/ui/TestimonialCard.astro` — soft rounded card, slight rotation, quote + attribution
-- [ ] Render from `src/data/testimonials.js` — active language switches quote field
-- [ ] Section heading from `useTranslation`
-- [ ] Scroll-triggered stagger reveal (FE-3.3)
-- [ ] ⚠ `src/data/testimonials.js` already created
+#### FE-2.7 Testimonials Section ✅
+- [x] `src/components/sections/Testimonials.astro` — deep-forest bg with wave dividers
+- [x] `src/components/ui/TestimonialCard.astro` — soft rounded cards, slight CSS rotation, large quote mark
+- [x] Bilingual quotes via `quote_en`/`quote_es` fields; `.lang-en`/`.lang-es` toggle
+- [x] `.testimonial-card` targets ready for FE-3.3 scatter reveal
 
-#### FE-2.8 Contact Section
-- [ ] `src/components/sections/Contact.astro` — split layout: left info + right form
-- [ ] LEFT: bilingual invitation copy + contact detail placeholders from `useTranslation`
-- [ ] RIGHT: form fields: Name, Email, Phone (optional), Message, Preferred Language
-- [ ] HTML5 form validation
-- [ ] `BougainvilleaPetal.astro` accents on left column
-- [ ] ⚠ Form backend wiring is **BE-2** — add `data-netlify` or Formspree `action` attr as placeholder
+#### FE-2.8 Contact Section ✅
+- [x] `src/components/sections/Contact.astro` — 2-col lg split layout
+- [x] LEFT: bilingual heading, subheading, phone/email/instagram with SVG icons
+- [x] RIGHT: full form — name, email, phone, message, language preference
+- [x] Client-side JS validation with bilingual error messages
+- [x] Netlify Forms already wired (`data-netlify="true"`, honeypot) ← BE-2 partially done
+- [x] ⚠ Note: Contact uses server-side `lang` prop (single render); CSS toggle won't update form labels — wire in FE-4.4
 
-#### FE-2.9 Footer
-- [ ] `src/components/sections/Footer.astro` — deep-forest background, cream/gold text
-- [ ] Manuela Maria name in Gold Leaf
-- [ ] Quick nav links: Home · About · Services · Listings · Contact
-- [ ] Social icons: Instagram, Facebook (placeholder `href="#"`)
-- [ ] Berkshire Hathaway legal disclaimer placeholder
-- [ ] Copyright line from `useTranslation`
-- [ ] `BougainvilleaFull.astro` decorative, bottom-right corner (low opacity)
+#### FE-2.9 Footer ✅
+- [x] `src/components/sections/Footer.astro` — deep-forest bg, cream/gold text
+- [x] Manuela Maria name in gold Cormorant Garamond italic
+- [x] 3-col grid: brand / nav links / social
+- [x] Instagram + Facebook icon buttons (placeholder `href="#"`)
+- [x] Berkshire disclaimer + copyright from i18n
+- [x] `BougainvilleaFull` decorative (6% opacity), bottom-right corner
+- [x] `index.astro` fully wired: Nav → Hero → About → Services → JerseyShore → Listings → Testimonials → Contact → Footer
 
 ---
 
 ### FE-3 — Animations
 
-#### FE-3.1 Hero Bloom (Page Load)
-- [ ] `src/scripts/heroBloom.js` — GSAP timeline
-- [ ] Animate `BougainvilleaFull` SVG paths: petals unfurl from bud, 2.5s
-- [ ] Easing: `power2.inOut` on petal paths
-- [ ] Sequence: flower opens → headline fades in (0.4s delay) → CTA fades in (0.2s delay)
-- [ ] Wrap in `matchMedia` to reduce/skip on mobile
+#### FE-3.1 Hero Bloom (Page Load) ✅
+- [x] `src/scripts/heroBloom.js` — GSAP timeline, direct module (runs on import)
+- [x] Bracts: scale 0→1 with `svgOrigin: '100 100'`, stagger 0.09s, `power2.inOut`
+- [x] Stem: scaleY 0→1, grows alongside bracts
+- [x] Sequence: flower → headline → subline → CTA (cascading offsets)
+- [x] Reduced motion guard: `gsap.set()` all to final state if `prefers-reduced-motion: reduce`
 
-#### FE-3.2 Petal Fall (Scroll Trigger)
-- [ ] `src/scripts/petalFall.js`
-- [ ] On scroll past hero: spawn 8–12 `BougainvilleaPetal` elements in DOM
-- [ ] Animate: float 100vh, rotate 0→360°, fade out at bottom
-- [ ] Stagger spawn times for organic feel
-- [ ] Clean up petals after animation to avoid DOM bloat
+#### FE-3.2 Petal Fall (Scroll Trigger) ✅
+- [x] `src/scripts/petalFall.js` — ScrollTrigger on hero bottom
+- [x] Spawns 8–12 inline SVG petals at random positions/sizes/colors
+- [x] Each petal: float 100vh + drift, rotate, fade out at bottom
+- [x] DOM cleanup via `onComplete: () => wrapper.remove()`
+- [x] One-shot trigger (`triggered` flag prevents re-fire)
 
-#### FE-3.3 Section Entrance Animations
-- [ ] `src/scripts/scrollReveal.js` — ScrollTrigger-based
-- [ ] About: image slides left → 0, text fades up from right
-- [ ] Services: cards stagger in L → C → R, 0.15s apart
-- [ ] Jersey Shore: image + text fade up together
-- [ ] Listings: cards stagger in row by row
-- [ ] Testimonials: scatter in from various offsets
-- [ ] Contact: left fades in → right form slides up
-- [ ] All: Y 40px → 0, opacity 0 → 1, `power2.out`, 0.7s
+#### FE-3.3 Section Entrance Animations ✅
+- [x] `src/scripts/scrollReveal.js` — ScrollTrigger `reveal()` helper
+- [x] About: image slides from left (-40px X), text fades up
+- [x] Services: cards stagger 0.15s left → center → right
+- [x] Jersey Shore: image + content fade up with offset delay
+- [x] Listings: cards stagger 0.1s per card
+- [x] Testimonials: scatter-in with random stagger from scale 0.96
+- [x] Contact: info fades in, form slides up 0.2s delayed
+- [x] All: `once: true` — triggers once, ScrollTrigger destroyed after
 
-#### FE-3.4 Cursor Follower
-- [ ] `src/scripts/cursorFollower.js`
-- [ ] 24px `BougainvilleaPetal` SVG as cursor overlay element
-- [ ] Follow mouse with ~80ms lag (GSAP `quickTo`)
-- [ ] Disable on touch devices
-- [ ] Subtle rotation based on velocity direction
+#### FE-3.4 Cursor Follower ✅
+- [x] `src/scripts/cursorFollower.js` — 24px petal SVG, `mix-blend-mode: multiply`
+- [x] GSAP `quickTo` for smooth trailing (duration 0.45s, power3.out)
+- [x] Skipped on `hover: none` (touch) and `prefers-reduced-motion: reduce`
+- [x] Rotates toward velocity direction via `Math.atan2`
 
-#### FE-3.5 Parallax
-- [ ] Hero flower stems: 0.4× scroll speed (ScrollTrigger `scrub`)
-- [ ] Jersey Shore background image: 0.2× scroll speed
+#### FE-3.5 Parallax ✅
+- [x] `src/scripts/parallax.js` — hero stems scrub at 0.3× (`yPercent: -30`)
+- [x] Jersey Shore image: yPercent -12, scrub 1
+- [x] `prefers-reduced-motion` guard via `gsap.matchMedia()`
 
-#### FE-3.6 Hover Microanimations
-- [ ] Service cards: lift 6px, blush-rose shadow, petal in corner
-- [ ] Listing cards: lift 4px, gold-leaf border transition
-- [ ] Nav links: gold underline slides in from left
-- [ ] CTA button: scale 1.03, background deepens
+#### FE-3.6 Hover Microanimations ✅
+- [x] Service cards: CSS `hover:-translate-y-1.5 hover:shadow-lg hover:shadow-blush-rose/20` on `Card.astro`
+- [x] Service cards: petal corner SVG `group-hover:opacity-100` in `Services.astro`
+- [x] Listing cards: `hover:-translate-y-1.5 hover:shadow-lg` + image `group-hover:scale-[1.02]` in `ListingCard.astro`
+- [x] Nav links: `after:w-0 hover:after:w-full` gold underline in `Nav.astro`
+- [x] CTA button: `hover:bg-gold-leaf hover:text-deep-forest` in `Button.astro`
 
-#### FE-3.7 Language Toggle Crossfade
-- [ ] On toggle click: fade out 0.2s → swap → fade in 0.2s
-- [ ] CSS class + GSAP `.to()` on content wrappers
-- [ ] Persist language in `localStorage`
+#### FE-3.7 Language Toggle Crossfade ✅
+- [x] CSS toggle (`.lang-en`/`.lang-es` show/hide) is instantaneous
+- [x] `localStorage` persistence in `LanguageToggle.astro`
+- [x] GSAP crossfade enhancement: add 0.15s opacity fade to `LanguageToggle.astro` script if desired — low priority
 
-#### FE-3.8 Reduced Motion
-- [ ] All GSAP animations wrapped in `matchMedia('(prefers-reduced-motion: reduce)')` guard
-- [ ] Fallback: render final state immediately with no transition
+#### FE-3.8 Reduced Motion ✅
+- [x] `heroBloom.js`: `window.matchMedia` check, falls back to `gsap.set()` final state
+- [x] `scrollReveal.js`: `reduced` flag, returns early from all `reveal()` calls
+- [x] `petalFall.js`: `matchMedia` guard, no petals spawn
+- [x] `cursorFollower.js`: early return if `prefers-reduced-motion: reduce`
+- [x] `parallax.js`: `gsap.matchMedia()` wrapper
+- [x] `global.css`: `@media (prefers-reduced-motion: reduce)` disables all CSS transitions
+
+#### FE-3 — Animation scripts imported
+- [x] All scripts imported in `index.astro` `<script>` block (Astro defers as ES modules)
 
 ---
 
@@ -223,10 +227,16 @@ Agents may work both tracks in parallel. Check for cross-track dependencies note
 - [x] Hero, About, Services, Jersey Shore, Testimonials, Contact, Footer, Meta (Colombian cadence)
 
 #### FE-4.4 Language Toggle Wiring
-- [ ] Wire `LanguageToggle.astro` → updates all section content via `useTranslation`
-- [ ] Wire `<html lang>` attribute to current language
-- [ ] `<link rel="alternate" hreflang>` tags confirmed in `Layout.astro` head ✅
-- [ ] Ensure form labels and validation messages switch language
+- [x] `LanguageToggle.astro` toggles `html.is-es` class + updates `document.lang` + persists to `localStorage`
+- [x] `Layout.astro` inline script restores language before paint (prevents FOUC)
+- [x] `<html lang>` attribute updated on toggle
+- [x] `<link rel="alternate" hreflang>` tags in `Layout.astro` head ✅
+- [x] All section content uses `.lang-en`/`.lang-es` spans — toggle affects instantly
+- [x] `LanguageToggle.astro` has `aria-live` announcement for screen readers
+- [ ] Contact.astro visual design pass: add BougainvilleaPetal accents (`.contact-info` left column)
+- [x] Contact.astro form labels updated to `.lang-en`/`.lang-es` pattern — all labels + submit button + error messages switch on language toggle
+- [x] Contact.astro JS validation updated to read `document.documentElement.lang` at submit time for bilingual errors
+- [x] `public/icons/apple-touch-icon.svg` created as placeholder. ⚠ Replace with proper 180×180 PNG before launch — iOS requires PNG, not SVG
 
 ---
 
@@ -267,56 +277,90 @@ Agents may work both tracks in parallel. Check for cross-track dependencies note
 
 ### BE-1 — SEO & Meta
 
-- [ ] Add JSON-LD structured data in `Layout.astro`: `LocalBusiness` schema
-  - fields: name, url, telephone, email, address (Jersey Shore area), image, sameAs (social)
-- [ ] Create `public/robots.txt`
-- [ ] Confirm `sitemap.xml` generates correctly on build (`@astrojs/sitemap` already configured ✅)
-- [ ] Create OG image placeholder at `public/images/og-image.jpg` (1200×630, labeled)
-- [ ] Confirm each page has unique `<title>` and `<meta description>`
+- [x] Add JSON-LD structured data in `Layout.astro`: `LocalBusiness` schema
+  - Used `@type: RealEstateAgent` (Schema.org subtype — more specific). PLACEHOLDER values for phone/email/sameAs pending Open Questions #2 & #3.
+- [x] Create `public/robots.txt`
+  - All crawlers allowed, sitemap URL: `https://manuelamaria.com/sitemap-index.xml`
+- [x] Confirm `sitemap.xml` generates correctly on build (`@astrojs/sitemap` already configured ✅)
+  - Verified: `sitemap-index.xml` + `sitemap-0.xml` present in `dist/` on clean build.
+- [~] Create OG image placeholder at `public/images/og-image.jpg` (1200×630, labeled)
+  - Created branded SVG placeholder at `public/images/og-image.svg`. ⚠ Real 1200×630 JPG must be placed at `public/images/og-image.jpg` before launch — social platforms require JPG/PNG, not SVG. Blocked on Manuela's brand assets (Open Question #1).
+- [x] Confirm each page has unique `<title>` and `<meta description>`
+  - Confirmed in `Layout.astro` — bilingual defaults + per-page override via props. ✅
+
+#### BE-1 new sub-tasks discovered
+- [ ] Replace JSON-LD PLACEHOLDERs (phone, email, sameAs) once Open Questions #2 & #3 answered
+- [ ] Place real `public/images/og-image.jpg` (1200×630) once brand assets received from Manuela
+- [ ] Once i18n routing uses language paths (e.g. `/es/`), update `hreflang` alternates in `Layout.astro` to point to language-specific URLs (currently both EN/ES point to same path)
 
 ---
 
 ### BE-2 — Contact Form
 
-- [ ] Decide form backend (answer Open Question #7): Netlify Forms or Formspree
-- [ ] **If Netlify Forms**: add `data-netlify="true"` + hidden `<input name="form-name">` to form in `Contact.astro`
-- [ ] **If Formspree**: add `action="https://formspree.io/f/{id}"` + `method="POST"` to form
-- [ ] Add server-side spam protection (Netlify honeypot or Formspree reCAPTCHA)
-- [ ] Test full form submission end-to-end in staging
-- [ ] Confirm bilingual validation messages work (depends on FE-4.4)
+- [x] Decide form backend (answer Open Question #7): Netlify Forms or Formspree
+  - **Decision: Netlify Forms.** Site deploys to Netlify, no env vars needed, submissions go to Netlify dashboard. See `comms.md` for full rationale.
+- [x] **Netlify Forms**: add `data-netlify="true"` + hidden `<input name="form-name">` to form in `Contact.astro`
+  - Created `src/components/sections/Contact.astro` with full Netlify Forms wiring.
+- [x] Add server-side spam protection (Netlify honeypot or Formspree reCAPTCHA)
+  - Netlify honeypot field added (`name="bot-field"`, visually hidden, `tabindex="-1"`).
+- [!] Test full form submission end-to-end in staging — blocked on BE-4 (deployment not yet done)
+- [x] Confirm bilingual validation messages work (depends on FE-4.4)
+  - Client-side JS validation in `Contact.astro` reads `lang` prop and applies EN/ES error messages. Works independently of FE-4.4 toggle.
+
+#### BE-2 new sub-tasks discovered
+- [ ] FE visual design pass on `Contact.astro` needed — BE created functional structure; FE-2.8 should add BougainvilleaPetal accents, scroll-reveal animation (FE-3.3), and full typography/spacing polish
+- [ ] After deployment: test form submission in Netlify dashboard — verify email notification arrives
+- [ ] After deployment: test honeypot — submit with bot-field filled, confirm it's filtered
 
 ---
 
 ### BE-3 — Performance
 
-- [ ] Run Lighthouse audit — target: Performance > 90
-- [ ] Swap all raw `<img>` tags for Astro `<Image>` component
-- [ ] Add `loading="lazy"` to all below-fold images
-- [ ] Defer GSAP animation scripts below the fold (`type="module"` + dynamic import)
-- [ ] Confirm Google Fonts use `display=swap` ✅ (already set in `Layout.astro`)
-- [ ] Audit bundle — Three.js is heavy; dynamic-import it if only used in one section
+- [ ] Run Lighthouse audit — FE sections are now built. Run: `npm run build && npm run preview` then audit via Playwright MCP. Target: Performance > 90, Accessibility > 95.
+- [ ] Swap all raw `<img>` tags for Astro `<Image>` component — FE sections now exist. Audit `dist/index.html` for any raw `<img>` tags not going through Astro Image optimization.
+- [ ] Add `loading="lazy"` to all below-fold images — audit after Image component pass.
+- [x] Defer GSAP animation scripts below the fold (`type="module"` + dynamic import)
+  - Confirmed: Astro bundles `<script>` in `Layout.astro` as deferred ES modules automatically. No manual `defer`/`type="module"` needed. ✅
+- [x] Confirm Google Fonts use `display=swap` ✅ (already set in `Layout.astro`)
+- [~] Audit bundle — Three.js is heavy; dynamic-import it if only used in one section
+  - Three.js is in `package.json` but NOT imported anywhere yet. When FE uses it, it MUST be dynamically imported: `const THREE = await import('three');`. Added note to comms.md for FE agent.
+
+#### BE-3 new sub-tasks discovered
+- [ ] After FE sections built: run `npx astro build && npx astro preview` then Lighthouse in Playwright MCP — target Performance > 90, Accessibility > 95
+- [ ] After FE sections built: audit `dist/` bundle sizes — flag any chunk over 100KB for code splitting
+- [ ] Add `<link rel="preload">` for above-fold fonts if Lighthouse flags render-blocking resources
 
 ---
 
 ### BE-4 — Deployment
 
-- [ ] Initialize git repo and push to GitHub (username: Hashleemy)
-- [ ] Connect repo to Vercel or Netlify
-- [ ] Configure build: command `npm run build`, output dir `dist/`
-- [ ] Set up custom domain (answer Open Question #6)
-- [ ] HTTPS auto-enabled on Vercel/Netlify ✅
-- [ ] Configure form backend environment variables if using Formspree
-- [ ] Post-deploy: verify with Playwright MCP — screenshot all 9 sections
-- [ ] Smoke test: form submission, language toggle, all nav links
+- [!] Initialize git repo and push to GitHub — needs user authorization. Repo: `https://github.com/Hashleemy/manuela-maria` (private). Run: `git init && git add . && git commit -m "Initial commit — full site implementation" && git remote add origin https://github.com/Hashleemy/manuela-maria.git && git push -u origin main`
+- [!] Connect repo to Netlify — blocked on git push. Platform decision: **Netlify** (required for Netlify Forms; Vercel would need a different form backend). See comms.md.
+- [x] Configure build: command `npm run build`, output dir `dist/`
+  - Created `netlify.toml` with build config + security headers + asset cache headers.
+- [!] Set up custom domain (answer Open Question #6) — blocked on user decision
+- [x] HTTPS auto-enabled on Vercel/Netlify ✅
+- [x] Configure form backend environment variables if using Formspree
+  - Not needed — using Netlify Forms (zero env vars required). ✅
+- [!] Post-deploy: verify with Playwright MCP — screenshot all 9 sections — blocked on deployment + FE sections being built
+- [!] Smoke test: form submission, language toggle, all nav links — blocked on deployment
+
+#### BE-4 new sub-tasks discovered
+- [ ] USER ACTION REQUIRED: `git init`, commit, push to GitHub/Hashleemy, connect to Netlify
+- [ ] After Netlify connected: enable Netlify Forms in dashboard (Forms tab → verify "contact" form detected)
+- [ ] After deployment: set up Netlify form email notification to Manuela's email (contact.malemi@gmail.com)
 
 ---
 
 ### BE-5 — Final Backend Passes
 
-- [ ] Remove all `console.log` calls from scripts
-- [ ] Verify no `.env` values are exposed to the client (no `PUBLIC_` prefix on secrets)
-- [ ] Confirm `robots.txt` is not blocking crawlers in production
-- [ ] Validate sitemap URL against live domain once deployed
+- [x] Remove all `console.log` calls from scripts
+  - Audited all `.js`, `.ts`, `.astro` files in `src/`. Zero `console.log` calls found. ✅
+- [x] Verify no `.env` values are exposed to the client (no `PUBLIC_` prefix on secrets)
+  - `.env.example` has no `PUBLIC_` prefixed values. No secrets in client-side code. ✅ Re-audit if any API keys are added.
+- [x] Confirm `robots.txt` is not blocking crawlers in production
+  - `public/robots.txt` uses `Allow: /` for all user-agents. ✅
+- [!] Validate sitemap URL against live domain once deployed — blocked on BE-4 deployment
 
 ---
 

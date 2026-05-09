@@ -24,6 +24,10 @@
 
 [CLAUDE] [2026-05-09] — tasks.md expanded to full build spec: 167 tasks across 6 phases covering scaffolding, design system, all 9 page sections, animations, bilingual content, and QA/deploy. GitHub: Hashleemy. Open questions still pending — see table below. Phase 2 ready to start.
 
+[CLAUDE] [2026-05-09] — Repo pushed. Private GitHub repo live at https://github.com/Hashleemy/manuela-maria. .claude/ gitignored and excluded from all commits. README and root .gitignore added. Author: Hashleemy.
+
+[AGENT-FE] [2026-05-09] — FE-1 and FE-2 complete. Design system: bilingual CSS toggle, 6 SVG components (BougainvilleaFull, Petal, CoastalWildflower, FlowerStem, WaveDivider, ServiceIcon), all 7 UI components (Button, Card, BerkshireBadge, LanguageToggle, PlaceholderImage, Nav, MobileMenu). All 9 page sections built and wired in index.astro. Build clean (890ms, 0 errors). Discovered: Contact.astro was already built by BE agent with Netlify Forms wiring — kept as-is, noted that form labels need CSS toggle pass in FE-4.4. Three.js not yet used anywhere — must be dynamic-imported when needed. Moving to FE-3 animations next.
+
 ---
 
 ## DECISIONS LOG

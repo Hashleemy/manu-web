@@ -23,6 +23,33 @@ const currentTitle = lang === 'es' ? titleEs : title;
 const currentDescription = lang === 'es' ? descriptionEs : description;
 const siteUrl = 'https://manuelamaria.com';
 const canonicalUrl = new URL(Astro.url.pathname, siteUrl);
+
+// BE-1: JSON-LD LocalBusiness / RealEstateAgent schema
+// Replace PLACEHOLDER values once Manuela provides contact details (Open Questions #2, #3)
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'RealEstateAgent',
+  name: 'Manuela Maria',
+  url: siteUrl,
+  telephone: '[PLACEHOLDER — add phone number]',
+  email: '[PLACEHOLDER — add email]',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Jersey Shore',
+    addressRegion: 'NJ',
+    addressCountry: 'US',
+  },
+  image: new URL(ogImage, siteUrl).toString(),
+  sameAs: [
+    '[PLACEHOLDER — Instagram URL]',
+    '[PLACEHOLDER — Facebook URL]',
+  ],
+  affiliation: {
+    '@type': 'Organization',
+    name: 'Berkshire Hathaway HomeServices',
+  },
+  knowsLanguage: ['en', 'es'],
+};
 ---
 
 <!doctype html>
@@ -61,6 +88,17 @@ const canonicalUrl = new URL(Astro.url.pathname, siteUrl);
     <link rel="icon" type="image/svg+xml" href="/icons/favicon.svg" />
     <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
 
+    <!-- Language preference restore — runs before paint to prevent FOUC -->
+    <script is:inline>
+      (function () {
+        var lang = localStorage.getItem('lang');
+        if (lang === 'es') {
+          document.documentElement.classList.add('is-es');
+          document.documentElement.setAttribute('lang', 'es');
+        }
+      })();
+    </script>
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -68,6 +106,9 @@ const canonicalUrl = new URL(Astro.url.pathname, siteUrl);
       href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap"
       rel="stylesheet"
     />
+
+    <!-- JSON-LD structured data (BE-1) -->
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)}></script>
 
     <slot name="head" />
   </head>

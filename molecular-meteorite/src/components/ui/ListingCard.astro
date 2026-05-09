@@ -1,0 +1,83 @@
+---
+import PlaceholderImage from './PlaceholderImage.astro';
+import { en } from '../../i18n/en.js';
+import { es } from '../../i18n/es.js';
+
+interface Props {
+  id: number;
+  address: string;
+  price: number;
+  beds: number;
+  baths: number;
+  sqft: number;
+  url?: string;
+}
+const { id, address, price, beds, baths, sqft, url = '#' } = Astro.props;
+
+const formattedPrice = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+  maximumFractionDigits: 0,
+}).format(price);
+
+const [street, ...rest] = address.split(',');
+const cityState = rest.join(',').trim();
+---
+
+<article class="listing-card group bg-petal-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg hover:shadow-blush-rose/15 transition-all duration-300 hover:-translate-y-1.5 border border-warm-charcoal/6">
+
+  <!-- Photo placeholder -->
+  <div class="overflow-hidden">
+    <PlaceholderImage
+      slot={`listing-${id}`}
+      label={street}
+      aspectRatio="4/3"
+      class="w-full rounded-none border-none group-hover:scale-[1.02] transition-transform duration-500"
+    />
+  </div>
+
+  <!-- Details -->
+  <div class="p-5">
+
+    <!-- Price -->
+    <p class="heading-display text-2xl text-deep-forest mb-1">{formattedPrice}</p>
+
+    <!-- Address -->
+    <p class="font-body text-sm text-warm-charcoal font-medium mb-0.5">{street}</p>
+    <p class="font-body text-xs text-warm-charcoal/60 mb-4">{cityState}</p>
+
+    <!-- Specs row -->
+    <div class="flex items-center gap-4 font-body text-sm text-warm-charcoal/80 border-t border-warm-charcoal/8 pt-4 mb-4">
+      <span>
+        <strong class="text-deep-forest">{beds}</strong>
+        <span class="lang-en ml-1">{en.listings.beds}</span>
+        <span class="lang-es ml-1">{es.listings.beds}</span>
+      </span>
+      <span class="text-warm-charcoal/25">|</span>
+      <span>
+        <strong class="text-deep-forest">{baths}</strong>
+        <span class="lang-en ml-1">{en.listings.baths}</span>
+        <span class="lang-es ml-1">{es.listings.baths}</span>
+      </span>
+      <span class="text-warm-charcoal/25">|</span>
+      <span>
+        <strong class="text-deep-forest">{sqft.toLocaleString()}</strong>
+        <span class="lang-en ml-1">{en.listings.sqft}</span>
+        <span class="lang-es ml-1">{es.listings.sqft}</span>
+      </span>
+    </div>
+
+    <!-- View Details link -->
+    <a
+      href={url}
+      class="inline-flex items-center gap-1.5 font-body text-sm font-medium text-gold-leaf hover:text-deep-forest transition-colors duration-200 group/link"
+    >
+      <span class="lang-en">{en.listings.viewDetails}</span>
+      <span class="lang-es">{es.listings.viewDetails}</span>
+      <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover/link:translate-x-0.5 transition-transform duration-200" aria-hidden="true">
+        <path d="M3 8h10M9 4l4 4-4 4" />
+      </svg>
+    </a>
+  </div>
+
+</article>

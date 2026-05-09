@@ -1,0 +1,30 @@
+---
+interface Props {
+  quoteEn: string;
+  quoteEs: string;
+  name: string;
+  location: string;
+  rotation?: number;
+}
+const { quoteEn, quoteEs, name, location, rotation = 0 } = Astro.props;
+---
+
+<figure
+  class="testimonial-card bg-petal-white rounded-3xl p-7 shadow-md shadow-blush-rose/10 flex flex-col gap-4 relative overflow-hidden"
+  style={rotation !== 0 ? `transform: rotate(${rotation}deg);` : ''}
+>
+  <!-- Decorative quote mark -->
+  <div class="absolute top-4 right-5 heading-accent text-6xl text-blush-rose/25 leading-none select-none" aria-hidden="true">"</div>
+
+  <!-- Quote -->
+  <blockquote class="font-body text-warm-charcoal leading-relaxed text-base relative z-10">
+    <span class="lang-en">"{quoteEn}"</span>
+    <span class="lang-es">"{quoteEs}"</span>
+  </blockquote>
+
+  <!-- Attribution -->
+  <figcaption class="font-body text-sm">
+    <span class="font-semibold text-deep-forest">{name}</span>
+    <span class="text-warm-charcoal/50 ml-1">· {location}</span>
+  </figcaption>
+</figure>

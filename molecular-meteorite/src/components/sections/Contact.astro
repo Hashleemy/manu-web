@@ -1,0 +1,223 @@
+---
+import { en } from '../../i18n/en.js';
+import { es } from '../../i18n/es.js';
+---
+
+<!--
+  Contact section — split layout: info left, Netlify form right.
+  Uses .lang-en / .lang-es CSS toggle throughout so all labels switch on language change.
+  FE-2.8 (structure) + BE-2 (Netlify Forms + honeypot) complete.
+-->
+<section id="contact" class="section-padding bg-cream-ivory">
+  <div class="section-wrapper">
+    <div class="contact-grid grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+
+      <!-- LEFT: Contact info -->
+      <div class="contact-info space-y-8">
+        <div>
+          <h2 class="heading-display text-4xl lg:text-5xl text-deep-forest text-balance-bi">
+            <span class="lang-en">{en.contact.heading}</span>
+            <span class="lang-es">{es.contact.heading}</span>
+          </h2>
+          <p class="mt-4 text-lg text-warm-charcoal/70 leading-relaxed text-balance-bi">
+            <span class="lang-en">{en.contact.subheading}</span>
+            <span class="lang-es">{es.contact.subheading}</span>
+          </p>
+        </div>
+
+        <ul class="space-y-5 text-warm-charcoal" aria-label="Contact details">
+          <li class="flex items-center gap-3">
+            <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9A96E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.68A2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            <a href={`tel:${en.contact.phone}`} class="hover:text-gold-leaf transition-colors">
+              <span class="lang-en">{en.contact.phone}</span>
+              <span class="lang-es">{es.contact.phone}</span>
+            </a>
+          </li>
+          <li class="flex items-center gap-3">
+            <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9A96E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 7L2 7"/></svg>
+            <a href={`mailto:${en.contact.email}`} class="hover:text-gold-leaf transition-colors">
+              <span class="lang-en">{en.contact.email}</span>
+              <span class="lang-es">{es.contact.email}</span>
+            </a>
+          </li>
+          <li class="flex items-center gap-3">
+            <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9A96E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="hover:text-gold-leaf transition-colors">
+              <span class="lang-en">{en.contact.instagram}</span>
+              <span class="lang-es">{es.contact.instagram}</span>
+            </a>
+          </li>
+          <li class="flex items-center gap-3">
+            <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9A96E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+            <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="hover:text-gold-leaf transition-colors">
+              <span class="lang-en">{en.contact.facebook}</span>
+              <span class="lang-es">{es.contact.facebook}</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- RIGHT: Netlify Form (BE-2) -->
+      <div class="contact-form-wrapper">
+        <form
+          name="contact"
+          method="POST"
+          data-netlify="true"
+          data-netlify-honeypot="bot-field"
+          class="space-y-6"
+          novalidate
+          id="contact-form"
+        >
+          <input type="hidden" name="form-name" value="contact" />
+
+          <!-- Honeypot — hidden from real users, visible to bots -->
+          <p class="hidden" aria-hidden="true">
+            <label>Don't fill this out: <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+          </p>
+
+          <!-- Name -->
+          <div>
+            <label for="contact-name" class="block text-sm font-medium text-warm-charcoal mb-1">
+              <span class="lang-en">{en.contact.form.name}</span>
+              <span class="lang-es">{es.contact.form.name}</span>
+              <span class="text-blush-rose ml-0.5" aria-hidden="true">*</span>
+            </label>
+            <input
+              type="text"
+              id="contact-name"
+              name="name"
+              required
+              autocomplete="name"
+              data-error-en="Please enter your name."
+              data-error-es="Por favor ingresa tu nombre."
+              class="w-full px-4 py-3 border border-warm-charcoal/20 rounded-lg bg-petal-white focus:outline-none focus:border-gold-leaf focus:ring-1 focus:ring-gold-leaf transition-colors"
+            />
+          </div>
+
+          <!-- Email -->
+          <div>
+            <label for="contact-email" class="block text-sm font-medium text-warm-charcoal mb-1">
+              <span class="lang-en">{en.contact.form.email}</span>
+              <span class="lang-es">{es.contact.form.email}</span>
+              <span class="text-blush-rose ml-0.5" aria-hidden="true">*</span>
+            </label>
+            <input
+              type="email"
+              id="contact-email"
+              name="email"
+              required
+              autocomplete="email"
+              data-error-en="Please enter a valid email address."
+              data-error-es="Por favor ingresa un correo electrónico válido."
+              class="w-full px-4 py-3 border border-warm-charcoal/20 rounded-lg bg-petal-white focus:outline-none focus:border-gold-leaf focus:ring-1 focus:ring-gold-leaf transition-colors"
+            />
+          </div>
+
+          <!-- Phone (optional) -->
+          <div>
+            <label for="contact-phone" class="block text-sm font-medium text-warm-charcoal mb-1">
+              <span class="lang-en">{en.contact.form.phone}</span>
+              <span class="lang-es">{es.contact.form.phone}</span>
+            </label>
+            <input
+              type="tel"
+              id="contact-phone"
+              name="phone"
+              autocomplete="tel"
+              class="w-full px-4 py-3 border border-warm-charcoal/20 rounded-lg bg-petal-white focus:outline-none focus:border-gold-leaf focus:ring-1 focus:ring-gold-leaf transition-colors"
+            />
+          </div>
+
+          <!-- Message -->
+          <div>
+            <label for="contact-message" class="block text-sm font-medium text-warm-charcoal mb-1">
+              <span class="lang-en">{en.contact.form.message}</span>
+              <span class="lang-es">{es.contact.form.message}</span>
+              <span class="text-blush-rose ml-0.5" aria-hidden="true">*</span>
+            </label>
+            <textarea
+              id="contact-message"
+              name="message"
+              rows="5"
+              required
+              data-error-en="Please tell us about your goals."
+              data-error-es="Por favor cuéntanos sobre tus objetivos."
+              class="w-full px-4 py-3 border border-warm-charcoal/20 rounded-lg bg-petal-white focus:outline-none focus:border-gold-leaf focus:ring-1 focus:ring-gold-leaf transition-colors resize-none"
+            ></textarea>
+          </div>
+
+          <!-- Preferred language -->
+          <div>
+            <label for="contact-language" class="block text-sm font-medium text-warm-charcoal mb-1">
+              <span class="lang-en">{en.contact.form.language}</span>
+              <span class="lang-es">{es.contact.form.language}</span>
+            </label>
+            <select
+              id="contact-language"
+              name="preferred_language"
+              class="w-full px-4 py-3 border border-warm-charcoal/20 rounded-lg bg-petal-white focus:outline-none focus:border-gold-leaf focus:ring-1 focus:ring-gold-leaf transition-colors"
+            >
+              <option value="en">{en.contact.form.languageEn}</option>
+              <option value="es">{es.contact.form.languageEs}</option>
+            </select>
+          </div>
+
+          <!-- Submit -->
+          <button
+            type="submit"
+            class="w-full px-8 py-4 bg-deep-forest text-cream-ivory font-medium rounded-lg hover:bg-deep-forest/85 hover:scale-[1.01] focus:outline-none focus:ring-2 focus:ring-gold-leaf focus:ring-offset-2 transition-all duration-200"
+          >
+            <span class="lang-en">{en.contact.form.submit}</span>
+            <span class="lang-es">{es.contact.form.submit}</span>
+          </button>
+
+          <!-- Error region (bilingual — populated by JS) -->
+          <div id="form-errors" role="alert" aria-live="polite" class="hidden text-sm text-blush-rose space-y-1"></div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+  // Bilingual client-side validation — reads current lang from <html lang> attr
+  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+  const errorsDiv = document.getElementById('form-errors');
+
+  // Sync language select to current UI language on lang change
+  window.addEventListener('langchange', (e: Event) => {
+    const { lang } = (e as CustomEvent<{ lang: string }>).detail;
+    const langSelect = document.getElementById('contact-language') as HTMLSelectElement | null;
+    if (langSelect) langSelect.value = lang;
+  });
+
+  form?.addEventListener('submit', (e) => {
+    const lang = document.documentElement.getAttribute('lang') ?? 'en';
+    const isEs = lang === 'es';
+    const errors: string[] = [];
+
+    form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('[required]').forEach((field) => {
+      const isEmpty = !field.value.trim();
+      const isInvalidEmail = field.type === 'email' && field.value && !field.validity.valid;
+
+      if (isEmpty || isInvalidEmail) {
+        const errKey = isEs ? 'errorEs' : 'errorEn';
+        errors.push(field.dataset[errKey] ?? (isEs ? 'Campo requerido.' : 'This field is required.'));
+        field.setAttribute('aria-invalid', 'true');
+      } else {
+        field.removeAttribute('aria-invalid');
+      }
+    });
+
+    if (errors.length > 0) {
+      e.preventDefault();
+      if (errorsDiv) {
+        errorsDiv.innerHTML = errors.map((msg) => `<p>${msg}</p>`).join('');
+        errorsDiv.classList.remove('hidden');
+      }
+    } else if (errorsDiv) {
+      errorsDiv.classList.add('hidden');
+    }
+  });
+</script>

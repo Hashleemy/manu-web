@@ -1,0 +1,46 @@
+---
+import ListingCard from '../ui/ListingCard.astro';
+import Button from '../ui/Button.astro';
+import { listings } from '../../data/listings.js';
+import { en } from '../../i18n/en.js';
+import { es } from '../../i18n/es.js';
+---
+
+<section id="listings" class="section-padding bg-cream-ivory">
+  <div class="section-wrapper">
+
+    <!-- Section heading -->
+    <div class="text-center mb-12">
+      <h2 class="heading-display text-4xl md:text-5xl text-deep-forest text-balance-bi">
+        <span class="lang-en">{en.listings.heading}</span>
+        <span class="lang-es">{es.listings.heading}</span>
+      </h2>
+    </div>
+
+    <!-- Listings grid -->
+    <div class="listings-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+      {listings.map((listing) => (
+        <ListingCard
+          id={listing.id}
+          address={listing.address}
+          price={listing.price}
+          beds={listing.beds}
+          baths={listing.baths}
+          sqft={listing.sqft}
+          url={listing.url}
+        />
+      ))}
+    </div>
+
+    <!-- View All CTA -->
+    <div class="text-center">
+      <Button
+        href="#contact"
+        variant="secondary"
+        labelEn={en.listings.viewAll}
+        labelEs={es.listings.viewAll}
+      />
+    </div>
+
+  </div>
+</section>

@@ -68,6 +68,62 @@ body {
   line-height: 1.2;
 }
 
+/* ── Bilingual toggle ── */
+/* JS adds .is-es to <html> on language switch */
+html:not(.is-es) .lang-es { display: none; }
+html.is-es .lang-en { display: none; }
+
+/* Spanish headings average ~15% longer — tighten tracking slightly */
+html.is-es .heading-display { letter-spacing: -0.015em; }
+
+/* Balanced wrapping for bilingual strings */
+.text-balance-bi {
+  text-wrap: balance;
+  overflow-wrap: break-word;
+}
+
+/* ── Organic image frames ── */
+.img-organic {
+  border-radius: 60% 40% 55% 45% / 45% 55% 45% 55%;
+  overflow: hidden;
+}
+
+.img-petal {
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  overflow: hidden;
+}
+
+/* ── Wave divider spacing ── */
+.wave-divider {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+}
+
+/* ── Organic clip-path helpers (FE-1.2) ── */
+.clip-organic {
+  clip-path: ellipse(48% 46% at 50% 54%);
+}
+
+.clip-petal {
+  clip-path: ellipse(45% 55% at 50% 45%);
+}
+
+.clip-wave-top {
+  clip-path: polygon(0 8%, 5% 4%, 15% 6%, 28% 2%, 42% 5%, 55% 1%, 68% 4%, 80% 0%, 92% 3%, 100% 0%, 100% 100%, 0 100%);
+}
+
+.clip-wave-bottom {
+  clip-path: polygon(0 0, 100% 0, 100% 92%, 95% 96%, 82% 94%, 68% 98%, 55% 95%, 40% 99%, 25% 96%, 12% 99%, 0 97%);
+}
+
+/* Long Spanish strings: prevent overflow on narrow viewports */
+.bilingual-text {
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
 /* ── Reduced motion ── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

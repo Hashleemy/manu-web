@@ -1,0 +1,68 @@
+---
+import PlaceholderImage from '../ui/PlaceholderImage.astro';
+import BougainvilleaPetal from '../BougainvilleaPetal.astro';
+import { en } from '../../i18n/en.js';
+import { es } from '../../i18n/es.js';
+---
+
+<section id="jersey-shore" class="section-padding bg-cream-ivory overflow-hidden">
+  <div class="section-wrapper">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+
+      <!-- LEFT: Coastal image with petal overlays -->
+      <div class="jersey-image relative order-2 lg:order-1">
+        <PlaceholderImage
+          slot="jersey-shore-coastal"
+          label="Jersey Shore coastline"
+          aspectRatio="4/5"
+          class="w-full rounded-3xl shadow-xl shadow-deep-forest/10"
+        />
+
+        <!-- Floating petal accents -->
+        <div class="absolute -top-4 -right-4 rotate-45 opacity-70 pointer-events-none" aria-hidden="true">
+          <BougainvilleaPetal size={36} color="#E8B4B8" />
+        </div>
+        <div class="absolute top-1/3 -left-6 -rotate-20 opacity-50 pointer-events-none" aria-hidden="true">
+          <BougainvilleaPetal size={28} color="#CC7A8F" />
+        </div>
+        <div class="absolute bottom-8 right-4 rotate-12 opacity-60 pointer-events-none" aria-hidden="true">
+          <BougainvilleaPetal size={22} color="#E8B4B8" />
+        </div>
+      </div>
+
+      <!-- RIGHT: Copy + neighborhoods -->
+      <div class="jersey-content space-y-7 order-1 lg:order-2">
+
+        <div>
+          <p class="font-body text-gold-leaf text-sm font-medium tracking-widest uppercase mb-3">
+            <span class="lang-en">{en.jerseyShore.subheading}</span>
+            <span class="lang-es">{es.jerseyShore.subheading}</span>
+          </p>
+          <h2 class="heading-display text-4xl md:text-5xl text-deep-forest text-balance-bi">
+            <span class="lang-en">{en.jerseyShore.heading}</span>
+            <span class="lang-es">{es.jerseyShore.heading}</span>
+          </h2>
+        </div>
+
+        <div class="space-y-4 font-body text-warm-charcoal leading-relaxed text-lg">
+          {en.jerseyShore.body.split('\n\n').map((paragraph) => (
+            <p class="lang-en">{paragraph}</p>
+          ))}
+          {es.jerseyShore.body.split('\n\n').map((paragraph) => (
+            <p class="lang-es">{paragraph}</p>
+          ))}
+        </div>
+
+        <!-- Neighborhood pills -->
+        <div class="flex flex-wrap gap-2 pt-2">
+          {en.jerseyShore.neighborhoods.map((name) => (
+            <span class="inline-block px-4 py-1.5 rounded-full bg-deep-forest/8 text-deep-forest font-body text-sm font-medium border border-deep-forest/15 hover:bg-gold-leaf/15 hover:border-gold-leaf/40 transition-colors duration-200 cursor-default">
+              {name}
+            </span>
+          ))}
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>

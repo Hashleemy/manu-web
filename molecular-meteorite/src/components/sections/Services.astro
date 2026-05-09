@@ -1,0 +1,61 @@
+---
+import WaveDivider from '../WaveDivider.astro';
+import Card from '../ui/Card.astro';
+import ServiceIcon from '../ui/ServiceIcon.astro';
+import { en } from '../../i18n/en.js';
+import { es } from '../../i18n/es.js';
+
+const services = [
+  { type: 'buying',     enTitle: en.services.buying.title,     esTitle: es.services.buying.title,     enDesc: en.services.buying.description,     esDesc: es.services.buying.description     },
+  { type: 'selling',    enTitle: en.services.selling.title,    esTitle: es.services.selling.title,    enDesc: en.services.selling.description,    esDesc: es.services.selling.description    },
+  { type: 'relocation', enTitle: en.services.relocation.title, esTitle: es.services.relocation.title, enDesc: en.services.relocation.description, esDesc: es.services.relocation.description },
+] as const;
+---
+
+<!-- Wave transition from About section (cream-ivory) into Services (petal-white) -->
+<WaveDivider fill="#FFFFFF" />
+
+<section id="services" class="section-padding bg-petal-white">
+  <div class="section-wrapper">
+
+    <!-- Section heading -->
+    <div class="text-center mb-14">
+      <h2 class="heading-display text-4xl md:text-5xl text-deep-forest text-balance-bi">
+        <span class="lang-en">{en.services.heading}</span>
+        <span class="lang-es">{es.services.heading}</span>
+      </h2>
+    </div>
+
+    <!-- Three service cards -->
+    <div class="services-grid grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+      {services.map(({ type, enTitle, esTitle, enDesc, esDesc }) => (
+        <Card class="service-card flex flex-col items-start gap-5 group relative overflow-hidden">
+
+          <!-- Petal corner accent — appears on hover (CSS) -->
+          <div class="absolute top-0 right-0 w-16 h-16 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" aria-hidden="true">
+            <svg viewBox="0 0 64 64" width="64" height="64">
+              <path d="M 64 0 C 64 20 52 40 32 56 C 48 36 60 16 64 0 Z" fill="#E8B4B8" opacity="0.5" />
+            </svg>
+          </div>
+
+          <ServiceIcon type={type} size={52} />
+
+          <div class="space-y-2">
+            <h3 class="heading-display text-2xl text-deep-forest">
+              <span class="lang-en">{enTitle}</span>
+              <span class="lang-es">{esTitle}</span>
+            </h3>
+            <p class="font-body text-warm-charcoal/80 leading-relaxed">
+              <span class="lang-en">{enDesc}</span>
+              <span class="lang-es">{esDesc}</span>
+            </p>
+          </div>
+        </Card>
+      ))}
+    </div>
+
+  </div>
+</section>
+
+<!-- Wave out to next section -->
+<WaveDivider fill="#FAF6EF" flipped />

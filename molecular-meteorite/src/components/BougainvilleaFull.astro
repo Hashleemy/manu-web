@@ -1,0 +1,59 @@
+---
+interface Props {
+  class?: string;
+  size?: number | string;
+  'aria-hidden'?: boolean | 'true' | 'false';
+}
+const { class: className = '', size = 200, 'aria-hidden': ariaHidden = true } = Astro.props;
+
+const bracts = [0, 60, 120, 180, 240, 300];
+const bractColors = ['#E8B4B8', '#CC7A8F', '#E8B4B8', '#CC7A8F', '#E8B4B8', '#CC7A8F'];
+---
+
+<!--
+  Bougainvillea — six bracts arranged radially.
+  Each .bract targets by GSAP heroBloom.js for the page-load animation.
+  transform-origin for GSAP: "100px 100px" (SVG center).
+-->
+<svg
+  viewBox="0 0 200 200"
+  width={size}
+  height={size}
+  class={className}
+  aria-hidden={ariaHidden}
+  xmlns="http://www.w3.org/2000/svg"
+  style="overflow: visible;"
+>
+  <!-- Stem -->
+  <path
+    class="stem"
+    d="M 100 100 C 100 122 91 148 86 172"
+    stroke="#2C4A3E"
+    stroke-width="2.5"
+    stroke-linecap="round"
+    fill="none"
+  />
+
+  <!-- Six bracts — each rotated 60° around center (100, 100) -->
+  {bracts.map((angle, i) => (
+    <path
+      class="bract"
+      data-index={i}
+      d="M 100 92 C 78 80 74 48 100 28 C 126 48 122 80 100 92 Z"
+      fill={bractColors[i]}
+      transform={`rotate(${angle}, 100, 100)`}
+    />
+  ))}
+
+  <!-- Three small white tubular flowers at center, at 30°/150°/270° -->
+  {[30, 150, 270].map((angle) => (
+    <g transform={`rotate(${angle}, 100, 100)`}>
+      <ellipse cx="100" cy="88" rx="2.5" ry="7" fill="#FAF6EF" />
+      <circle cx="100" cy="82" r="2.5" fill="#C9A96E" />
+    </g>
+  ))}
+
+  <!-- Center disc -->
+  <circle cx="100" cy="100" r="7" fill="#E8C47A" />
+  <circle cx="100" cy="100" r="4" fill="#C9A96E" />
+</svg>

@@ -1,0 +1,75 @@
+---
+import LanguageToggle from './ui/LanguageToggle.astro';
+---
+
+<header
+  id="site-nav"
+  class="fixed top-0 left-0 right-0 z-50 transition-all duration-500"
+  data-scrolled="false"
+>
+  <div class="section-wrapper flex items-center justify-between h-16 md:h-20">
+
+    <!-- Logo / Name -->
+    <a
+      href="#home"
+      class="heading-accent text-xl md:text-2xl text-deep-forest hover:text-gold-leaf transition-colors duration-200"
+      aria-label="Manuela Maria — Home"
+    >
+      Manuela Maria
+    </a>
+
+    <!-- Desktop nav links -->
+    <nav aria-label="Main navigation" class="hidden md:flex items-center gap-8">
+      {[
+        { href: '#home',      en: 'Home',      es: 'Inicio'       },
+        { href: '#about',     en: 'About',     es: 'Sobre Mí'     },
+        { href: '#services',  en: 'Services',  es: 'Servicios'    },
+        { href: '#listings',  en: 'Listings',  es: 'Propiedades'  },
+        { href: '#contact',   en: 'Contact',   es: 'Contacto'     },
+      ].map(({ href, en, es }) => (
+        <a
+          href={href}
+          class="nav-link relative font-body text-sm font-medium text-deep-forest hover:text-gold-leaf transition-colors duration-200 after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-gold-leaf after:transition-all after:duration-300 hover:after:w-full"
+        >
+          <span class="lang-en">{en}</span>
+          <span class="lang-es">{es}</span>
+        </a>
+      ))}
+    </nav>
+
+    <!-- Right: language toggle + hamburger -->
+    <div class="flex items-center gap-4">
+      <LanguageToggle />
+
+      <!-- Hamburger (mobile only) -->
+      <button
+        id="mobile-menu-trigger"
+        class="md:hidden flex flex-col gap-1.5 p-2 rounded-md hover:bg-blush-rose/20 transition-colors"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <span class="hamburger-line block w-5 h-0.5 bg-deep-forest transition-all duration-300"></span>
+        <span class="hamburger-line block w-5 h-0.5 bg-deep-forest transition-all duration-300"></span>
+        <span class="hamburger-line block w-5 h-0.5 bg-deep-forest transition-all duration-300"></span>
+      </button>
+    </div>
+
+  </div>
+</header>
+
+<script>
+  const nav = document.getElementById('site-nav') as HTMLElement;
+
+  // Scroll: transparent → cream background
+  const onScroll = () => {
+    const scrolled = window.scrollY > 60;
+    nav.setAttribute('data-scrolled', String(scrolled));
+    nav.style.backgroundColor = scrolled ? 'rgba(250,246,239,0.95)' : 'transparent';
+    nav.style.backdropFilter = scrolled ? 'blur(8px)' : 'none';
+    nav.style.boxShadow = scrolled ? '0 1px 0 rgba(44,74,62,0.08)' : 'none';
+  };
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll(); // run once on load
+</script>

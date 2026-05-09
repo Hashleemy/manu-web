@@ -1,0 +1,56 @@
+---
+interface Props {
+  class?: string;
+  size?: number | string;
+  'aria-hidden'?: boolean | 'true' | 'false';
+}
+const { class: className = '', size = 80, 'aria-hidden': ariaHidden = true } = Astro.props;
+
+const petalAngles = [0, 45, 90, 135, 180, 225, 270, 315];
+---
+
+<!-- Coastal wildflower — 8-petal daisy representing Jersey Shore flora -->
+<svg
+  viewBox="0 0 80 120"
+  width={size}
+  class={className}
+  aria-hidden={ariaHidden}
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <!-- Stem -->
+  <path
+    d="M 40 54 C 40 72 37 92 36 116"
+    stroke="#2C4A3E"
+    stroke-width="2"
+    stroke-linecap="round"
+    fill="none"
+  />
+
+  <!-- Leaf -->
+  <path
+    d="M 38 82 C 26 74 22 64 34 70"
+    stroke="#2C4A3E"
+    stroke-width="1.5"
+    stroke-linecap="round"
+    fill="#2C4A3E"
+    opacity="0.55"
+  />
+
+  <!-- 8 petals — ellipses rotated around flower center (40, 46) -->
+  {petalAngles.map((angle) => (
+    <ellipse
+      cx="40"
+      cy="29"
+      rx="5"
+      ry="14"
+      fill="#FAF6EF"
+      stroke="#E8B4B8"
+      stroke-width="0.5"
+      transform={`rotate(${angle}, 40, 46)`}
+    />
+  ))}
+
+  <!-- Center -->
+  <circle cx="40" cy="46" r="9" fill="#E8C47A" />
+  <circle cx="40" cy="46" r="5" fill="#C9A96E" />
+</svg>

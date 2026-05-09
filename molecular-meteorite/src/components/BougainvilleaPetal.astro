@@ -1,0 +1,42 @@
+---
+interface Props {
+  class?: string;
+  size?: number | string;
+  color?: string;
+  opacity?: number;
+  'aria-hidden'?: boolean | 'true' | 'false';
+}
+const {
+  class: className = '',
+  size = 40,
+  color = '#E8B4B8',
+  opacity = 0.9,
+  'aria-hidden': ariaHidden = true,
+} = Astro.props;
+
+const height = typeof size === 'number' ? Math.round((size as number) * 1.4) : size;
+---
+
+<!-- Single bougainvillea bract — used as cursor follower and in petal-fall animation -->
+<svg
+  viewBox="0 0 40 56"
+  width={size}
+  height={height}
+  class={className}
+  aria-hidden={ariaHidden}
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M 20 52 C 6 42 2 24 20 4 C 38 24 34 42 20 52 Z"
+    fill={color}
+    opacity={opacity}
+  />
+  <!-- Central vein — gives papery bougainvillea character -->
+  <path
+    d="M 20 50 C 20 32 20 18 20 6"
+    stroke="rgba(255,255,255,0.35)"
+    stroke-width="0.8"
+    stroke-linecap="round"
+    fill="none"
+  />
+</svg>

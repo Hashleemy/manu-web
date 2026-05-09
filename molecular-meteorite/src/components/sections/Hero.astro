@@ -1,0 +1,81 @@
+---
+import BougainvilleaFull from '../BougainvilleaFull.astro';
+import FlowerStem from '../FlowerStem.astro';
+import Button from '../ui/Button.astro';
+---
+
+<section
+  id="home"
+  class="relative w-full min-h-screen flex items-center justify-center overflow-hidden"
+  style="background: linear-gradient(170deg, #FAF6EF 45%, #F2D6D9 100%);"
+>
+  <!-- Parallax left stem -->
+  <div
+    id="hero-stem-left"
+    class="absolute left-0 bottom-0 opacity-25 pointer-events-none select-none"
+    aria-hidden="true"
+  >
+    <FlowerStem size={280} />
+  </div>
+
+  <!-- Parallax right stem (mirrored) -->
+  <div
+    id="hero-stem-right"
+    class="absolute right-0 bottom-0 opacity-20 pointer-events-none select-none"
+    style="transform: scaleX(-1);"
+    aria-hidden="true"
+  >
+    <FlowerStem size={320} />
+  </div>
+
+  <!-- Main content -->
+  <div class="relative z-10 text-center px-6 flex flex-col items-center">
+
+    <!-- Bougainvillea bloom — target for heroBloom.js (FE-3.1) -->
+    <div id="hero-flower" class="mb-6 md:mb-10" aria-hidden="true">
+      <BougainvilleaFull size={180} class="md:w-[220px] md:h-[220px]" />
+    </div>
+
+    <!-- Headline -->
+    <h1
+      id="hero-headline"
+      class="heading-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-deep-forest mb-4 text-balance-bi max-w-3xl"
+    >
+      <span class="lang-en">Your Home Awaits.</span>
+      <span class="lang-es">Tu Hogar te Espera.</span>
+    </h1>
+
+    <!-- Subline -->
+    <p
+      id="hero-subline"
+      class="heading-accent text-lg sm:text-xl md:text-2xl text-gold-leaf italic mb-10 text-balance-bi"
+    >
+      Manuela Maria &nbsp;·&nbsp; Berkshire Hathaway HomeServices
+    </p>
+
+    <!-- CTA -->
+    <div id="hero-cta">
+      <Button
+        href="#contact"
+        variant="primary"
+        labelEn="Find Your Home"
+        labelEs="Encuentra tu Hogar"
+        class="text-base px-8 py-4"
+      />
+    </div>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div
+    class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 opacity-50"
+    aria-hidden="true"
+  >
+    <span class="font-body text-xs text-deep-forest tracking-widest uppercase">
+      <span class="lang-en">Scroll</span>
+      <span class="lang-es">Bajar</span>
+    </span>
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#2C4A3E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="animate-bounce">
+      <path d="M6 9l6 6 6-6" />
+    </svg>
+  </div>
+</section>

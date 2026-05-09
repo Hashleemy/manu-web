@@ -1,0 +1,59 @@
+---
+import PlaceholderImage from '../ui/PlaceholderImage.astro';
+import BerkshireBadge from '../ui/BerkshireBadge.astro';
+import CoastalWildflower from '../CoastalWildflower.astro';
+import { en } from '../../i18n/en.js';
+import { es } from '../../i18n/es.js';
+---
+
+<section id="about" class="relative section-padding overflow-hidden bg-cream-ivory">
+
+  <!-- Background wildflower accent -->
+  <div class="absolute top-8 right-4 md:right-12 opacity-[0.07] pointer-events-none select-none rotate-12" aria-hidden="true">
+    <CoastalWildflower size={180} />
+  </div>
+  <div class="absolute bottom-12 left-2 md:left-8 opacity-[0.05] pointer-events-none select-none -rotate-6" aria-hidden="true">
+    <CoastalWildflower size={120} />
+  </div>
+
+  <div class="section-wrapper">
+    <div class="about-grid grid grid-cols-1 md:grid-cols-[2fr_3fr] gap-12 md:gap-16 lg:gap-24 items-center">
+
+      <!-- LEFT: Portrait -->
+      <div class="about-image relative">
+        <PlaceholderImage
+          slot="manuela-portrait"
+          label="Manuela Maria — portrait"
+          aspectRatio="3/4"
+          class="w-full max-w-sm mx-auto md:mx-0 img-organic shadow-xl shadow-blush-rose/15"
+        />
+        <!-- Small petal accent -->
+        <div class="absolute -bottom-4 -right-4 md:-right-8 opacity-60" aria-hidden="true">
+          <CoastalWildflower size={56} />
+        </div>
+      </div>
+
+      <!-- RIGHT: Story -->
+      <div class="about-content space-y-6">
+        <h2 class="heading-display text-4xl md:text-5xl text-deep-forest text-balance-bi">
+          <span class="lang-en">{en.about.heading}</span>
+          <span class="lang-es">{es.about.heading}</span>
+        </h2>
+
+        <div class="space-y-4 font-body text-warm-charcoal leading-relaxed text-lg">
+          {en.about.body.split('\n\n').map((paragraph) => (
+            <p class="lang-en">{paragraph}</p>
+          ))}
+          {es.about.body.split('\n\n').map((paragraph) => (
+            <p class="lang-es">{paragraph}</p>
+          ))}
+        </div>
+
+        <div class="pt-2">
+          <BerkshireBadge />
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

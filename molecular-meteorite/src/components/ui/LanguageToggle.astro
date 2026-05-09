@@ -1,0 +1,48 @@
+---
+interface Props {
+  class?: string;
+}
+const { class: className = '' } = Astro.props;
+---
+
+<button
+  id="lang-toggle"
+  class={`lang-toggle relative inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full border border-warm-charcoal/20 font-body text-xs font-medium text-warm-charcoal hover:border-gold-leaf hover:text-gold-leaf transition-all duration-200 cursor-pointer ${className}`}
+  aria-label="Switch language / Cambiar idioma"
+>
+  <span class="lang-toggle-en font-semibold text-deep-forest">EN</span>
+  <span class="text-warm-charcoal/40 select-none" aria-hidden="true">|</span>
+  <span class="lang-toggle-es">ES</span>
+</button>
+
+<!-- aria-live region for screen readers -->
+<div aria-live="polite" aria-atomic="true" class="sr-only" id="lang-announce"></div>
+
+<script>
+  const toggle = document.getElementById('lang-toggle') as HTMLButtonElement;
+  const announce = document.getElementById('lang-announce') as HTMLDivElement;
+  const enLabel = toggle.querySelector('.lang-toggle-en') as HTMLSpanElement;
+  const esLabel = toggle.querySelector('.lang-toggle-es') as HTMLSpanElement;
+
+  function setActive(isEs: boolean) {
+    document.documentElement.classList.toggle('is-es', isEs);
+    document.documentElement.setAttribute('lang', isEs ? 'es' : 'en');
+    localStorage.setItem('lang', isEs ? 'es' : 'en');
+
+    enLabel.style.fontWeight = isEs ? '400' : '600';
+    enLabel.style.color = isEs ? '' : '#2C4A3E';
+    esLabel.style.fontWeight = isEs ? '600' : '400';
+    esLabel.style.color = isEs ? '#2C4A3E' : '';
+
+    announce.textContent = isEs
+      ? 'Idioma cambiado a Español'
+      : 'Language changed to English';
+  }
+
+  // Init from current html class (set by inline script in Layout.astro)
+  setActive(document.documentElement.classList.contains('is-es'));
+
+  toggle.addEventListener('click', () => {
+    setActive(!document.documentElement.classList.contains('is-es'));
+  });
+</script>

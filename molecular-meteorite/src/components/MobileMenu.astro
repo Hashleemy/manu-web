@@ -1,0 +1,104 @@
+---
+// MobileMenu — slide-in drawer, triggered by #mobile-menu-trigger in Nav.astro
+---
+
+<div
+  id="mobile-menu"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Navigation menu"
+  class="fixed inset-0 z-[60] pointer-events-none"
+>
+  <!-- Backdrop -->
+  <div
+    id="mobile-menu-backdrop"
+    class="absolute inset-0 bg-deep-forest/40 opacity-0 transition-opacity duration-300"
+  ></div>
+
+  <!-- Drawer panel -->
+  <nav
+    id="mobile-menu-panel"
+    class="absolute top-0 right-0 h-full w-72 max-w-[85vw] bg-cream-ivory flex flex-col pt-20 pb-8 px-8 translate-x-full transition-transform duration-400 ease-[cubic-bezier(0.4,0,0.2,1)] shadow-2xl"
+    aria-label="Mobile navigation"
+  >
+    <!-- Close button -->
+    <button
+      id="mobile-menu-close"
+      class="absolute top-5 right-6 p-2 rounded-full hover:bg-blush-rose/20 transition-colors"
+      aria-label="Close menu"
+    >
+      <svg viewBox="0 0 24 24" width="20" height="20" stroke="#2C4A3E" stroke-width="2" stroke-linecap="round" fill="none" aria-hidden="true">
+        <path d="M18 6 6 18M6 6l12 12" />
+      </svg>
+    </button>
+
+    <!-- Nav links -->
+    <ul class="flex flex-col gap-2 mt-4">
+      {[
+        { href: '#home',      en: 'Home',      es: 'Inicio'       },
+        { href: '#about',     en: 'About',     es: 'Sobre Mí'     },
+        { href: '#services',  en: 'Services',  es: 'Servicios'    },
+        { href: '#listings',  en: 'Listings',  es: 'Propiedades'  },
+        { href: '#contact',   en: 'Contact',   es: 'Contacto'     },
+      ].map(({ href, en, es }) => (
+        <li>
+          <a
+            href={href}
+            class="mobile-nav-link block py-3 font-body text-lg font-medium text-deep-forest border-b border-warm-charcoal/10 hover:text-gold-leaf hover:pl-2 transition-all duration-200"
+          >
+            <span class="lang-en">{en}</span>
+            <span class="lang-es">{es}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <!-- Bottom accent -->
+    <div class="mt-auto pt-8">
+      <p class="heading-accent text-lg text-gold-leaf italic">
+        <span class="lang-en">Your home awaits.</span>
+        <span class="lang-es">Tu hogar te espera.</span>
+      </p>
+    </div>
+  </nav>
+</div>
+
+<script>
+  const trigger = document.getElementById('mobile-menu-trigger') as HTMLButtonElement;
+  const menu = document.getElementById('mobile-menu') as HTMLDivElement;
+  const panel = document.getElementById('mobile-menu-panel') as HTMLElement;
+  const backdrop = document.getElementById('mobile-menu-backdrop') as HTMLDivElement;
+  const closeBtn = document.getElementById('mobile-menu-close') as HTMLButtonElement;
+  const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+
+  let isOpen = false;
+
+  function openMenu() {
+    isOpen = true;
+    menu.style.pointerEvents = 'auto';
+    backdrop.style.opacity = '1';
+    panel.style.transform = 'translateX(0)';
+    trigger.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+    closeBtn.focus();
+  }
+
+  function closeMenu() {
+    isOpen = false;
+    menu.style.pointerEvents = 'none';
+    backdrop.style.opacity = '0';
+    panel.style.transform = 'translateX(100%)';
+    trigger.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+    trigger.focus();
+  }
+
+  trigger.addEventListener('click', () => (isOpen ? closeMenu() : openMenu()));
+  closeBtn.addEventListener('click', closeMenu);
+  backdrop.addEventListener('click', closeMenu);
+  mobileLinks.forEach((link) => link.addEventListener('click', closeMenu));
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && isOpen) closeMenu();
+  });
+</script>
