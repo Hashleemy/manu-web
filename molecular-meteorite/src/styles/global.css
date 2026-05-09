@@ -1,0 +1,79 @@
+@import "tailwindcss";
+
+/* ── Design Tokens ── */
+@theme {
+  /* Colors */
+  --color-cream-ivory: #FAF6EF;
+  --color-deep-forest: #2C4A3E;
+  --color-blush-rose: #E8B4B8;
+  --color-gold-leaf: #C9A96E;
+  --color-petal-white: #FFFFFF;
+  --color-warm-charcoal: #3D3D3D;
+
+  /* Typography */
+  --font-heading: 'Playfair Display', Georgia, serif;
+  --font-accent: 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+
+  /* Spacing extras */
+  --spacing-section: 6rem;
+  --spacing-section-lg: 10rem;
+
+  /* Border radius — organic shapes */
+  --radius-organic: 60% 40% 55% 45% / 45% 55% 45% 55%;
+  --radius-petal: 50% 50% 50% 50% / 60% 60% 40% 40%;
+}
+
+/* ── Base ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: theme(--color-cream-ivory);
+  color: theme(--color-warm-charcoal);
+  font-family: theme(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  overflow-x: hidden;
+  min-height: 100dvh;
+}
+
+/* ── Layout helpers ── */
+.section-wrapper {
+  max-width: 1280px;
+  margin-inline: auto;
+  padding-inline: clamp(1.5rem, 5vw, 5rem);
+}
+
+.section-padding {
+  padding-block: var(--spacing-section);
+}
+
+/* ── Typography helpers ── */
+.heading-display {
+  font-family: theme(--font-heading);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.heading-accent {
+  font-family: theme(--font-accent);
+  font-style: italic;
+  line-height: 1.2;
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,106 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  titleEs?: string;
+  description?: string;
+  descriptionEs?: string;
+  ogImage?: string;
+  lang?: 'en' | 'es';
+}
+
+const {
+  title = 'Manuela Maria | Jersey Shore Real Estate',
+  titleEs = 'Manuela Maria | Bienes Raíces en Jersey Shore',
+  description = 'Manuela Maria — Berkshire Hathaway HomeServices. Your trusted guide to buying, selling, and relocating in the Jersey Shore area.',
+  descriptionEs = 'Manuela Maria — Berkshire Hathaway HomeServices. Tu guía de confianza para comprar, vender y reubicarte en Jersey Shore.',
+  ogImage = '/images/og-image.jpg',
+  lang = 'en',
+} = Astro.props;
+
+const currentTitle = lang === 'es' ? titleEs : title;
+const currentDescription = lang === 'es' ? descriptionEs : description;
+const siteUrl = 'https://manuelamaria.com';
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl);
+---
+
+<!doctype html>
+<html lang={lang} class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#FAF6EF" />
+
+    <title>{currentTitle}</title>
+    <meta name="description" content={currentDescription} />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- Bilingual alternates -->
+    <link rel="alternate" hreflang="en" href={new URL(Astro.url.pathname, siteUrl)} />
+    <link rel="alternate" hreflang="es" href={new URL(Astro.url.pathname, siteUrl)} />
+    <link rel="alternate" hreflang="x-default" href={new URL('/', siteUrl)} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={currentTitle} />
+    <meta property="og:description" content={currentDescription} />
+    <meta property="og:image" content={new URL(ogImage, siteUrl)} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content={lang === 'es' ? 'es_CO' : 'en_US'} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={currentTitle} />
+    <meta name="twitter:description" content={currentDescription} />
+    <meta name="twitter:image" content={new URL(ogImage, siteUrl)} />
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/svg+xml" href="/icons/favicon.svg" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <slot name="head" />
+  </head>
+
+  <body class="bg-cream-ivory text-warm-charcoal font-body">
+    <slot />
+
+    <!-- Lenis smooth scroll + GSAP init -->
+    <script>
+      import Lenis from 'lenis';
+      import { gsap } from 'gsap';
+      import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      const lenis = new Lenis({
+        duration: 1.2,
+        easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        orientation: 'vertical',
+        smoothWheel: true,
+      });
+
+      lenis.on('scroll', ScrollTrigger.update);
+
+      gsap.ticker.add((time) => {
+        lenis.raf(time * 1000);
+      });
+
+      gsap.ticker.lagSmoothing(0);
+
+      (window as Window & { lenis?: Lenis }).lenis = lenis;
+      (window as Window & { gsap?: typeof gsap }).gsap = gsap;
+      (window as Window & { ScrollTrigger?: typeof ScrollTrigger }).ScrollTrigger = ScrollTrigger;
+    </script>
+  </body>
+</html>
