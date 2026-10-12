@@ -1,6 +1,6 @@
-# Manuela Maria — Real Estate Website
+Real Estate Website
 
-A luxury real estate website for Manuela Maria, a Colombian-born agent serving the Jersey Shore and surrounding communities through Berkshire Hathaway. Built with warmth, craft, and a bilingual soul.
+A luxury real estate website for a Colombian-born agent serving the Jersey Shore and surrounding communities through Berkshire Hathaway. Built with warmth, craft, and a bilingual soul.
 
 ---
 
