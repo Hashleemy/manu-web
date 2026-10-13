@@ -1,0 +1,61 @@
+---
+/**
+ * SlotImage — renders a real, optimized photo when a file exists in
+ * src/assets/content/ with the given name, otherwise a labeled placeholder.
+ *
+ * Usage:  <SlotImage file="manuela-portrait.jpg" altEn="…" altEs="…" aspectRatio="3/4" class="…" />
+ * Drop the file in src/assets/content/ and rebuild — no code change needed.
+ */
+import { Image } from 'astro:assets';
+import PlaceholderImage from './PlaceholderImage.astro';
+
+interface Props {
+  file: string;
+  altEn: string;
+  altEs?: string;
+  aspectRatio?: string;
+  class?: string;
+  widths?: number[];
+  sizes?: string;
+  loading?: 'lazy' | 'eager';
+  label?: string;
+}
+const {
+  file,
+  altEn,
+  altEs = altEn,
+  aspectRatio = '4/3',
+  class: className = '',
+  widths = [480, 768, 1200],
+  sizes = '(max-width: 768px) 100vw, 50vw',
+  loading = 'lazy',
+  label,
+} = Astro.props;
+
+// Eagerly import every content photo once; look ours up by file name.
+const all = import.meta.glob<{ default: ImageMetadata }>(
+  '/src/assets/content/*.{jpg,jpeg,png,webp,JPG,JPEG,PNG,WEBP}',
+  { eager: true }
+);
+const match = Object.entries(all).find(([path]) => path.endsWith('/' + file));
+const image = match?.[1].default;
+
+// Alt text follows the active language. Both are rendered; CSS shows one.
+const altCombined = altEn === altEs ? altEn : `${altEn} / ${altEs}`;
+---
+
+{image ? (
+  <div class={`slot-image overflow-hidden ${className}`} style={`aspect-ratio: ${aspectRatio};`} data-slot={file}>
+    <Image
+      src={image}
+      alt={altCombined}
+      widths={widths}
+      sizes={sizes}
+      loading={loading}
+      decoding="async"
+      class="w-full h-full object-cover"
+    />
+  </div>
+) : (
+  <PlaceholderImage slot={file} label={label ?? altEn} aspectRatio={aspectRatio} class={className} />
+)}

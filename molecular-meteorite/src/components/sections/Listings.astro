@@ -2,6 +2,9 @@
 import ListingCard from '../ui/ListingCard.astro';
 import Button from '../ui/Button.astro';
 import { listings } from '../../data/listings.js';
+import { visibleEntries } from '../../data/content.js';
+
+const { items, isSample } = visibleEntries(listings);
 import { en } from '../../i18n/en.js';
 import { es } from '../../i18n/es.js';
 ---
@@ -17,30 +20,49 @@ import { es } from '../../i18n/es.js';
       </h2>
     </div>
 
-    <!-- Listings grid -->
-    <div class="listings-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-      {listings.map((listing) => (
-        <ListingCard
-          id={listing.id}
-          address={listing.address}
-          price={listing.price}
-          beds={listing.beds}
-          baths={listing.baths}
-          sqft={listing.sqft}
-          url={listing.url}
-        />
-      ))}
-    </div>
+    {items.length > 0 ? (
+      <>
+        <!-- Listings grid -->
+        <div class="listings-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+          {items.map((listing) => (
+            <ListingCard
+              id={listing.id}
+              address={listing.address}
+              price={listing.price}
+              beds={listing.beds}
+              baths={listing.baths}
+              sqft={listing.sqft}
+              url={listing.url}
+              sample={isSample}
+            />
+          ))}
+        </div>
 
-    <!-- View All CTA -->
-    <div class="text-center">
-      <Button
-        href="#contact"
-        variant="secondary"
-        labelEn={en.listings.viewAll}
-        labelEs={es.listings.viewAll}
-      />
-    </div>
+        <!-- View All CTA -->
+        <div class="text-center">
+          <Button
+            href="#contact"
+            variant="secondary"
+            labelEn={en.listings.viewAll}
+            labelEs={es.listings.viewAll}
+          />
+        </div>
+      </>
+    ) : (
+      <!-- No real listings yet — warm invitation instead of an empty grid -->
+      <div class="listing-card max-w-2xl mx-auto text-center bg-petal-white rounded-3xl px-8 py-12 shadow-sm border border-warm-charcoal/6">
+        <p class="font-body text-lg text-warm-charcoal/80 leading-relaxed text-balance-bi mb-8">
+          <span class="lang-en">{en.listings.comingSoon}</span>
+          <span class="lang-es">{es.listings.comingSoon}</span>
+        </p>
+        <Button
+          href="#contact"
+          variant="primary"
+          labelEn={en.listings.comingSoonCta}
+          labelEs={es.listings.comingSoonCta}
+        />
+      </div>
+    )}
 
   </div>
 </section>

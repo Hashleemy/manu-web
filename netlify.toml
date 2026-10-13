@@ -1,12 +1,17 @@
+# Netlify configuration — repo root.
+# The Astro project lives in molecular-meteorite/, so "Import from GitHub" needs
+# no manual settings: base, build command and publish dir are all declared here.
+
 [build]
+  base    = "molecular-meteorite"
   command = "npm run build"
   publish = "dist"
 
 [build.environment]
   NODE_VERSION = "22"
 
-# Netlify Forms — detected automatically from data-netlify="true" on Contact.astro form
-# No extra config needed; form submissions go to Netlify dashboard
+# Netlify Forms — detected automatically from data-netlify="true" on the contact form.
+# After the first deploy: Site → Forms → "contact" → Notifications → add Manuela's email.
 
 # Security headers
 [[headers]]
@@ -19,7 +24,7 @@
 
 # Cache static assets aggressively
 [[headers]]
-  for = "/fonts/*"
+  for = "/_astro/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
@@ -27,8 +32,3 @@
   for = "/images/*"
   [headers.values]
     Cache-Control = "public, max-age=86400"
-
-[[headers]]
-  for = "/_astro/*"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"

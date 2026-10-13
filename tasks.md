@@ -274,8 +274,8 @@ Agents may work both tracks in parallel. Check for cross-track dependencies note
 - [x] Animation timing pass — verified against `soul.md`: all easing uses `power2.inOut/out` ✅; 40px Y section reveals ✅; petal fall 8-12 petals (soul: 6-12) ✅; cursor 24px ✅; hero bloom sequence (bracts → headline → CTA) ✅; language crossfade implemented ✅; no animation >2.5s ✅
 - [!] Proof all English copy: warm, confident, not corporate — needs user review
 - [!] Proof all Spanish copy: Colombian cadence — needs user review (native speaker preferred)
-- [!] Replace all `[PLACEHOLDER]` contact info once received from Manuela — blocked on Open Questions #2 & #3
-- [!] Replace all placeholder images once received from Manuela — blocked on Open Question #1
+- [x] `[PLACEHOLDER]` contact strings removed; contact details now come from `src/data/site.js` and are hidden until filled (2026-10-13)
+- [x] Placeholder images are now auto-swapped by `SlotImage.astro` when the named file lands in `src/assets/content/` — no code change needed when photos arrive (2026-10-13)
 
 ---
 
@@ -295,8 +295,8 @@ Agents may work both tracks in parallel. Check for cross-track dependencies note
   - Confirmed in `Layout.astro` — bilingual defaults + per-page override via props. ✅
 
 #### BE-1 new sub-tasks discovered
-- [ ] Replace JSON-LD PLACEHOLDERs (phone, email, sameAs) once Open Questions #2 & #3 answered
-- [ ] Place real `public/images/og-image.jpg` (1200×630) once brand assets received from Manuela
+- [x] JSON-LD reads from `site.js`; placeholder values removed, optional fields omitted when empty (2026-10-13)
+- [ ] Optional: drop a photo-based `og-image.jpg` in `src/assets/content/` — branded SVG-derived card is live in the meantime
 - [ ] Once i18n routing uses language paths (e.g. `/es/`), update `hreflang` alternates in `Layout.astro` to point to language-specific URLs (currently both EN/ES point to same path)
 
 ---
@@ -369,6 +369,25 @@ Agents may work both tracks in parallel. Check for cross-track dependencies note
 - [x] Confirm `robots.txt` is not blocking crawlers in production
   - `public/robots.txt` uses `Allow: /` for all user-agents. ✅
 - [!] Validate sitemap URL against live domain once deployed — blocked on BE-4 deployment
+
+---
+
+## CONTENT LAYER — PUBLISH-READY STATE (2026-10-13) ✅
+
+Goal: site can be deployed today; the only remaining work is dropping in Manuela's photos, words and contact details.
+
+- [x] `src/data/site.js` — single file for contact, office, license, domain, service area and photo slots. Empty fields hide their element; no `[PLACEHOLDER]` text can reach a visitor (verified: 0 occurrences in `dist/index.html`).
+- [x] `src/components/ui/SlotImage.astro` — looks for `src/assets/content/<file>`; renders an optimized responsive `<Image>` (480/768/1200w WebP) when present, labeled placeholder otherwise. Verified both paths in a build.
+- [x] Listings + testimonials: all current entries flagged `sample: true`. Visible in `npm run dev` with a gold "Sample" badge; hidden in production. With no real listings the section shows a bilingual "listings coming soon" card with a contact CTA; with no real testimonials the section is omitted entirely.
+- [x] Contact + Footer: phone / email / Instagram / Facebook / LinkedIn render only when set. Footer disclaimer assembled from brokerage + office + license + office address. Copyright year dynamic.
+- [x] JSON-LD: optional fields included only when filled; `areaServed` from `site.serviceArea`.
+- [x] Site URL: `site.domain` → Netlify `URL` env → fallback. Canonical, OG, sitemap and JSON-LD all follow it.
+- [x] Root `netlify.toml` with `base = "molecular-meteorite"` — GitHub import needs no manual settings. Inner netlify.toml removed.
+- [x] `content/CONTENT-CHECKLIST.md` + `content/QUESTIONS-FOR-MANUELA.md` (bilingual intake).
+- [ ] USER: collect answers from Manuela → Claude rewrites `about.body`, `jerseyShore.body`, services copy in EN + ES.
+- [ ] USER: drop photos into `src/assets/content/` (see its README for names and sizes).
+- [ ] USER: fill `site.js` contact fields; replace sample listings/testimonials with real ones.
+- [ ] USER: Netlify import → Forms notification email → test submission → (optional) domain.
 
 ---
 

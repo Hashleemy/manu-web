@@ -1,5 +1,6 @@
 ---
-import PlaceholderImage from '../ui/PlaceholderImage.astro';
+import SlotImage from '../ui/SlotImage.astro';
+import { site } from '../../data/site.js';
 import BerkshireBadge from '../ui/BerkshireBadge.astro';
 import CoastalWildflower from '../CoastalWildflower.astro';
 import { en } from '../../i18n/en.js';
@@ -21,10 +22,13 @@ import { es } from '../../i18n/es.js';
 
       <!-- LEFT: Portrait -->
       <div class="about-image relative">
-        <PlaceholderImage
-          slot="manuela-portrait"
-          label="Manuela Maria — portrait"
+        <SlotImage
+          file={site.images.portrait.file}
+          altEn={site.images.portrait.altEn}
+          altEs={site.images.portrait.altEs}
+          label="Manuela — portrait"
           aspectRatio="3/4"
+          sizes="(max-width: 768px) 90vw, 384px"
           class="w-full max-w-sm mx-auto md:mx-0 img-organic shadow-xl shadow-blush-rose/15"
         />
         <!-- Small petal accent -->

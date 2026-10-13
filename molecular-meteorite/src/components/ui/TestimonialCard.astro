@@ -5,14 +5,23 @@ interface Props {
   name: string;
   location: string;
   rotation?: number;
+  sample?: boolean;
 }
-const { quoteEn, quoteEs, name, location, rotation = 0 } = Astro.props;
+const { quoteEn, quoteEs, name, location, rotation = 0, sample = false } = Astro.props;
+import { en } from '../../i18n/en.js';
+import { es } from '../../i18n/es.js';
 ---
 
 <figure
   class="testimonial-card bg-petal-white rounded-3xl p-7 shadow-md shadow-blush-rose/10 flex flex-col gap-4 relative overflow-hidden"
   style={rotation !== 0 ? `transform: rotate(${rotation}deg);` : ''}
 >
+  {sample && (
+    <span class="absolute top-4 left-5 px-2 py-0.5 rounded-full bg-gold-leaf/20 text-deep-forest font-body text-[10px] font-semibold tracking-wide uppercase">
+      <span class="lang-en">{en.testimonials.sampleBadge}</span>
+      <span class="lang-es">{es.testimonials.sampleBadge}</span>
+    </span>
+  )}
   <!-- Decorative quote mark -->
   <div class="absolute top-4 right-5 heading-accent text-6xl text-blush-rose/25 leading-none select-none" aria-hidden="true">"</div>
 

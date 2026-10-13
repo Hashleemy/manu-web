@@ -54,17 +54,17 @@ Manuela conoce estos vecindarios como vecina, no solo como agente. Puede decirte
     beds: 'hab',
     baths: 'baños',
     sqft: 'pie²',
+    comingSoon: 'Nuevas propiedades están en camino. Cuéntame qué buscas y te enviaré casas antes de que salgan al mercado.',
+    comingSoonCta: 'Cuéntame Qué Necesitas',
+    sampleBadge: 'Ejemplo',
   },
   testimonials: {
     heading: 'Lo que Dicen los Clientes',
+    sampleBadge: 'Ejemplo',
   },
   contact: {
     heading: 'Encontremos Tu Hogar',
     subheading: '¿Lista para dar el siguiente paso? Contáctame — respondo en menos de 24 horas.',
-    phone: '[PLACEHOLDER — agregar número de teléfono]',
-    email: '[PLACEHOLDER — agregar correo]',
-    instagram: '[PLACEHOLDER — agregar @usuario]',
-    facebook: '[PLACEHOLDER — agregar enlace]',
     form: {
       name: 'Tu Nombre',
       email: 'Correo Electrónico',
@@ -79,7 +79,10 @@ Manuela conoce estos vecindarios como vecina, no solo como agente. Puede decirte
   footer: {
     tagline: 'Cuidando tu jardín más importante.',
     quickLinks: 'Navegación',
-    disclaimer: '[PLACEHOLDER — texto de descargo legal de Berkshire Hathaway HomeServices]',
-    copyright: '© 2026 Manuela Maria. Todos los derechos reservados.',
+    // Se construye en Footer.astro a partir de src/data/site.js. Edita la redacción aquí.
+    licensedWith: 'es agente inmobiliaria licenciada con',
+    licenseLabel: 'Licencia NJ',
+    equalHousing: 'Igualdad de Oportunidades de Vivienda. Cada oficina es de propiedad y operación independiente.',
+    copyright: 'Todos los derechos reservados.',
   },
 };

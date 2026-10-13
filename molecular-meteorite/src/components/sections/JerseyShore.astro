@@ -1,5 +1,6 @@
 ---
-import PlaceholderImage from '../ui/PlaceholderImage.astro';
+import SlotImage from '../ui/SlotImage.astro';
+import { site } from '../../data/site.js';
 import BougainvilleaPetal from '../BougainvilleaPetal.astro';
 import { en } from '../../i18n/en.js';
 import { es } from '../../i18n/es.js';
@@ -11,8 +12,10 @@ import { es } from '../../i18n/es.js';
 
       <!-- LEFT: Coastal image with petal overlays -->
       <div class="jersey-image relative order-2 lg:order-1">
-        <PlaceholderImage
-          slot="jersey-shore-coastal"
+        <SlotImage
+          file={site.images.jerseyShore.file}
+          altEn={site.images.jerseyShore.altEn}
+          altEs={site.images.jerseyShore.altEs}
           label="Jersey Shore coastline"
           aspectRatio="4/5"
           class="w-full rounded-3xl shadow-xl shadow-deep-forest/10"
@@ -55,7 +58,7 @@ import { es } from '../../i18n/es.js';
 
         <!-- Neighborhood pills -->
         <div class="flex flex-wrap gap-2 pt-2">
-          {en.jerseyShore.neighborhoods.map((name) => (
+          {site.serviceArea.map((name) => (
             <span class="inline-block px-4 py-1.5 rounded-full bg-deep-forest/8 text-deep-forest font-body text-sm font-medium border border-deep-forest/15 hover:bg-gold-leaf/15 hover:border-gold-leaf/40 transition-colors duration-200 cursor-default">
               {name}
             </span>

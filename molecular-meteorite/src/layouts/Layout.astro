@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { site, socialLinks } from '../data/site.js';
 
 interface Props {
   title?: string;
@@ -21,32 +22,33 @@ const {
 
 const currentTitle = lang === 'es' ? titleEs : title;
 const currentDescription = lang === 'es' ? descriptionEs : description;
-const siteUrl = 'https://manuelamaria.com';
+// Astro.site comes from astro.config.mjs → resolveSiteUrl() (site.domain, else Netlify URL)
+const siteUrl = (Astro.site ?? new URL('https://manuelamaria.netlify.app')).toString().replace(/\/$/, '');
 const canonicalUrl = new URL(Astro.url.pathname, siteUrl);
 
-// BE-1: JSON-LD LocalBusiness / RealEstateAgent schema
-// Replace PLACEHOLDER values once Manuela provides contact details (Open Questions #2, #3)
+// BE-1: JSON-LD RealEstateAgent schema — every optional field is included only when
+// it has been filled in src/data/site.js, so search engines never see placeholder text.
+const sameAs = socialLinks().map((s) => s.url);
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'RealEstateAgent',
-  name: 'Manuela Maria',
+  name: site.name,
   url: siteUrl,
-  telephone: '[PLACEHOLDER — add phone number]',
-  email: '[PLACEHOLDER — add email]',
+  ...(site.phone && { telephone: site.phone }),
+  ...(site.email && { email: site.email }),
   address: {
     '@type': 'PostalAddress',
+    ...(site.officeAddress && { streetAddress: site.officeAddress }),
     addressLocality: 'Jersey Shore',
     addressRegion: 'NJ',
     addressCountry: 'US',
   },
+  areaServed: site.serviceArea.map((name) => ({ '@type': 'City', name })),
   image: new URL(ogImage, siteUrl).toString(),
-  sameAs: [
-    '[PLACEHOLDER — Instagram URL]',
-    '[PLACEHOLDER — Facebook URL]',
-  ],
+  ...(sameAs.length > 0 && { sameAs }),
   affiliation: {
     '@type': 'Organization',
-    name: 'Berkshire Hathaway HomeServices',
+    name: [site.brokerage, site.office].filter(Boolean).join(' '),
   },
   knowsLanguage: ['en', 'es'],
 };

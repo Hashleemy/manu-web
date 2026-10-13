@@ -48,6 +48,10 @@ The one-sentence north star:
 ├── tasks.md              # Full build task board (6 phases)
 ├── comms.md              # Agent communication & decision log
 ├── recap.md              # Session recap
+├── netlify.toml          # Netlify build config (base dir, headers) — import the repo and deploy, no settings needed
+├── content/
+│   ├── CONTENT-CHECKLIST.md     # Every photo / text / contact item still needed, and where it goes
+│   └── QUESTIONS-FOR-MANUELA.md # Bilingual intake questions that feed the bio and copy
 └── molecular-meteorite/  # Astro project
     ├── src/
     │   ├── components/   # UI + section components
@@ -55,13 +59,25 @@ The one-sentence north star:
     │   ├── pages/        # Astro pages
     │   ├── styles/       # Global CSS + design tokens
     │   ├── scripts/      # GSAP, Lenis, cursor animations
-    │   ├── i18n/         # EN/ES translations
-    │   └── data/         # Listings, testimonials, services
+    │   ├── i18n/         # EN/ES copy (bio, headings, service blurbs)
+    │   ├── data/         # site.js (contact, office, photo slots), listings, testimonials
+    │   └── assets/content/  # DROP PHOTOS HERE — exact file names in its README
     └── public/
         └── images/       # Placeholder image slots
 ```
 
 ---
+
+## Adding Content (no code changes needed)
+
+| What | Where |
+|---|---|
+| Phone, email, socials, office, license, domain | `molecular-meteorite/src/data/site.js` — empty fields are simply hidden |
+| Photos | `molecular-meteorite/src/assets/content/` using the exact file names in its README |
+| Bio, headings, service text (EN + ES) | `molecular-meteorite/src/i18n/en.js` and `es.js` |
+| Listings / testimonials | `molecular-meteorite/src/data/listings.js`, `testimonials.js` — remove `sample: true` on real entries |
+
+Sample listings and testimonials show in `npm run dev` with a **Sample** badge and are hidden from production builds, so a deploy never shows invented content. Full checklist: `content/CONTENT-CHECKLIST.md`.
 
 ## Getting Started
 

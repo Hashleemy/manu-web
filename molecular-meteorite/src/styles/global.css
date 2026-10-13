@@ -26,9 +26,9 @@
 }
 
 /* ── Base ── */
-/* NOTE: no universal margin/padding reset here — Tailwind v4 preflight already provides it
-   inside @layer base. An unlayered reset would outrank every p-*/m-* utility (cascade layers
-   lose to unlayered styles), which silently stripped all component padding. */
+/* NOTE: no universal margin/padding reset here. Tailwind v4 preflight already provides it
+   inside @layer base. An unlayered reset would outrank every padding and margin utility
+   (layered styles lose to unlayered ones), which silently stripped all component padding. */
 html {
   scroll-behavior: smooth;
   background-color: theme(--color-cream-ivory);

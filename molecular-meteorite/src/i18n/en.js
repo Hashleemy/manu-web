@@ -54,17 +54,17 @@ Manuela knows these neighborhoods as a neighbor, not just an agent. She can tell
     beds: 'bd',
     baths: 'ba',
     sqft: 'sq ft',
+    comingSoon: 'New listings are on their way. Tell me what you are looking for and I will send you homes before they hit the market.',
+    comingSoonCta: 'Tell Me What You Need',
+    sampleBadge: 'Sample listing',
   },
   testimonials: {
     heading: 'What Clients Say',
+    sampleBadge: 'Sample',
   },
   contact: {
     heading: "Let's Find Your Home",
     subheading: 'Ready to take the next step? Reach out — I respond within 24 hours.',
-    phone: '[PLACEHOLDER — add phone number]',
-    email: '[PLACEHOLDER — add email]',
-    instagram: '[PLACEHOLDER — add @handle]',
-    facebook: '[PLACEHOLDER — add page link]',
     form: {
       name: 'Your Name',
       email: 'Email Address',
@@ -79,7 +79,10 @@ Manuela knows these neighborhoods as a neighbor, not just an agent. She can tell
   footer: {
     tagline: 'Tending to your most important garden.',
     quickLinks: 'Quick Links',
-    disclaimer: '[PLACEHOLDER — Berkshire Hathaway HomeServices legal disclaimer text]',
-    copyright: '© 2026 Manuela Maria. All rights reserved.',
+    // Built in Footer.astro from src/data/site.js (brokerage, office, license). Edit the wording here.
+    licensedWith: 'is a licensed real estate salesperson with',
+    licenseLabel: 'NJ License',
+    equalHousing: 'Equal Housing Opportunity. Each office is independently owned and operated.',
+    copyright: 'All rights reserved.',
   },
 };
