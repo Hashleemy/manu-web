@@ -7,6 +7,7 @@
   --color-deep-forest: #2C4A3E;
   --color-blush-rose: #E8B4B8;
   --color-gold-leaf: #C9A96E;
+  --color-gold-leaf-light: #DABF8A; /* 5.47:1 on deep-forest — small text on dark backgrounds */
   --color-petal-white: #FFFFFF;
   --color-warm-charcoal: #3D3D3D;
 
@@ -25,12 +26,9 @@
 }
 
 /* ── Base ── */
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
+/* NOTE: no universal margin/padding reset here — Tailwind v4 preflight already provides it
+   inside @layer base. An unlayered reset would outrank every p-*/m-* utility (cascade layers
+   lose to unlayered styles), which silently stripped all component padding. */
 html {
   scroll-behavior: smooth;
   background-color: theme(--color-cream-ivory);

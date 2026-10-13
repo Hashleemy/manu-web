@@ -8,11 +8,11 @@ const { class: className = '' } = Astro.props;
 <button
   id="lang-toggle"
   class={`lang-toggle relative inline-flex items-center gap-1.5 px-4 py-2 md:py-1.5 min-h-[40px] rounded-full border border-warm-charcoal/20 font-body text-xs font-medium text-warm-charcoal hover:border-gold-leaf hover:text-gold-leaf transition-all duration-200 cursor-pointer ${className}`}
-  aria-label="Switch language / Cambiar idioma"
 >
   <span class="lang-toggle-en font-semibold text-deep-forest">EN</span>
   <span class="text-warm-charcoal/40 select-none" aria-hidden="true">|</span>
   <span class="lang-toggle-es">ES</span>
+  <span class="sr-only">— Switch language / Cambiar idioma</span>
 </button>
 
 <!-- aria-live region for screen readers -->
@@ -39,6 +39,8 @@ const { class: className = '' } = Astro.props;
     document.documentElement.classList.toggle('is-es', isEs);
     document.documentElement.setAttribute('lang', isEs ? 'es' : 'en');
     localStorage.setItem('lang', isEs ? 'es' : 'en');
+    const t = document.documentElement.dataset[isEs ? 'titleEs' : 'titleEn'];
+    if (t) document.title = t;
     updateToggleVisuals(isEs);
   }
 

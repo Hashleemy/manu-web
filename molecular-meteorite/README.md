@@ -24,7 +24,7 @@ Bilingual real estate site for Manuela Maria, serving the Jersey Shore with Colo
 ## Getting Started
 
 ```bash
-npm install
+npm install   # requires Node >= 22.12 (nvm use 22)
 npm run dev       # http://localhost:4321
 npm run build
 npm run preview

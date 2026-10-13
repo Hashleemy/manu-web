@@ -261,11 +261,16 @@ Agents may work both tracks in parallel. Check for cross-track dependencies note
 
 #### FE-5.3 Cross-Browser ✅ (code-level; live browser testing needed before launch)
 - [x] Code-level audit complete: fixed Safari `backdrop-filter` — added `-webkit-backdrop-filter` to Nav.astro scroll handler. All other code uses standard, well-supported APIs (GSAP, Lenis, CSS custom properties, aspect-ratio, clamp, inert, clip-path — all Chrome 102+/Firefox 112+/Safari 15.5+). `text-wrap: balance` degrades gracefully in older browsers.
-- [!] Chrome/Firefox/Edge live testing — needs browser; no local Chrome installed. Must test before launch.
+- [x] Chrome live testing — 2026-10-13: Playwright Chromium 141 + local Google Chrome (Lighthouse). Desktop 1440px + iPhone 13 viewport, EN + ES. 0 console errors, 0 axe violations, no horizontal scroll. Firefox/Edge still untested (low risk — no vendor-specific CSS beyond -webkit-backdrop-filter).
 - [!] Safari live testing — GSAP backdrop-filter fix applied in code; verify visually in Safari.
 - [!] iOS Safari + Android Chrome — verify smooth scroll (Lenis), language toggle, form submit on mobile browsers.
 
 #### FE-5.4 Final Frontend Passes
+- [x] 2026-10-13 BUG FIXED: `global.css` had an unlayered `*, *::before, *::after { margin:0; padding:0 }` reset. Unlayered CSS beats Tailwind v4's `@layer utilities`, so every `p-*`/`m-*`/`px-*` class was silently ignored (buttons had 0 padding, cards had 0 padding, section spacing collapsed). Tailwind preflight already resets margin/padding in `@layer base`; the custom reset was removed.
+- [x] 2026-10-13 WCAG AA contrast pass (axe-core 4.10, 0 violations): footer text cream/40→/75 and cream/60→/75, footer eyebrow labels use new `gold-leaf-light` token (#DABF8A, 5.47:1 on deep-forest), captions charcoal/50→/75, charcoal/60→/75, charcoal/70→/80, Jersey Shore eyebrow deep-forest/60→/80.
+- [x] 2026-10-13 Language toggle: visible text `EN | ES` was not part of the aria-label (WCAG 2.5.3 label-in-name) — replaced aria-label with an sr-only suffix. Toggle and first-paint script now also swap `<title>` to the Spanish title.
+- [x] 2026-10-13 Footer "Connect" label made bilingual ("Conecta").
+- [x] 2026-10-13 BUG FIXED: mobile drawer never slid into view (backdrop dimmed, panel stayed offscreen). `MobileMenu.astro` set an inline `transform: translateX(0)`, but Tailwind v4's `translate-x-full` uses the separate CSS `translate` property, which inline `transform` cannot override. Script now sets `panel.style.translate` directly. Verified in Playwright: panel at x=102–390 on iPhone 13, closes on link click, `inert` restored.
 - [x] Animation timing pass — verified against `soul.md`: all easing uses `power2.inOut/out` ✅; 40px Y section reveals ✅; petal fall 8-12 petals (soul: 6-12) ✅; cursor 24px ✅; hero bloom sequence (bracts → headline → CTA) ✅; language crossfade implemented ✅; no animation >2.5s ✅
 - [!] Proof all English copy: warm, confident, not corporate — needs user review
 - [!] Proof all Spanish copy: Colombian cadence — needs user review (native speaker preferred)
@@ -284,7 +289,7 @@ Agents may work both tracks in parallel. Check for cross-track dependencies note
   - All crawlers allowed, sitemap URL: `https://manuelamaria.com/sitemap-index.xml`
 - [x] Confirm `sitemap.xml` generates correctly on build (`@astrojs/sitemap` already configured ✅)
   - Verified: `sitemap-index.xml` + `sitemap-0.xml` present in `dist/` on clean build.
-- [~] Create OG image placeholder at `public/images/og-image.jpg` (1200×630, labeled)
+- [x] Create OG image placeholder at `public/images/og-image.jpg` (1200×630, rasterized from og-image.svg via sharp; `apple-touch-icon.png` 180×180 generated the same way — Layout.astro referenced both as .jpg/.png but only .svg existed → 404s)
   - Created branded SVG placeholder at `public/images/og-image.svg`. ⚠ Real 1200×630 JPG must be placed at `public/images/og-image.jpg` before launch — social platforms require JPG/PNG, not SVG. Blocked on Manuela's brand assets (Open Question #1).
 - [x] Confirm each page has unique `<title>` and `<meta description>`
   - Confirmed in `Layout.astro` — bilingual defaults + per-page override via props. ✅
@@ -317,7 +322,7 @@ Agents may work both tracks in parallel. Check for cross-track dependencies note
 
 ### BE-3 — Performance
 
-- [!] Run Lighthouse audit — Chrome not installed in agent environment. USER ACTION: `npm run preview` → DevTools Lighthouse → target Performance > 90, Accessibility > 95.
+- [x] Run Lighthouse audit — 2026-10-13 (Lighthouse 12.8, local Chrome, `npm run preview`): mobile 100/100/100/100 (LCP 1.5s, CLS 0.007), desktop 100/100/100/100 (LCP 0.4s). Before fixes mobile was 87/96 — Google Fonts CSS was render-blocking (839ms); now loaded via preload→stylesheet swap with <noscript> fallback.
 - [x] Bundle size audit: HTML 85.4KB / JS 135.5KB total / CSS 33.9KB. All JS chunks under 100KB (GSAP 68.4, ScrollTrigger 42.5, Lenis+Layout 17.6, animations 6, toggle 0.9). Three.js absent. Gzipped ~50KB JS, ~8KB CSS, ~18KB HTML — acceptable for GSAP+Lenis creative site.
 - [x] Swap all raw `<img>` tags for Astro `<Image>` component
   - Audited `dist/index.html`: zero raw `<img>` tags. All images use `PlaceholderImage.astro` divs. ✅ Re-audit when real photos replace placeholders.
@@ -329,7 +334,7 @@ Agents may work both tracks in parallel. Check for cross-track dependencies note
 - [x] TypeScript type check: 0 errors, 0 warnings (1 harmless hint about JSON-LD is:inline). ✅
 
 #### BE-3 new sub-tasks discovered
-- [ ] USER: Run `npm run preview` → open Lighthouse in DevTools → verify Performance > 90, Accessibility > 95
+- [x] Lighthouse verified (see BE-3 above) — all four categories 100 on mobile and desktop
 - [ ] After real photos land: audit `<Image>` components — ensure all use `loading="lazy"` below fold, `loading="eager"` for hero
 - [ ] When FE uses Three.js: wrap in `const THREE = await import('three');` — do NOT import at module top level
 
@@ -337,7 +342,7 @@ Agents may work both tracks in parallel. Check for cross-track dependencies note
 
 ### BE-4 — Deployment
 
-- [!] Initialize git repo and push to GitHub — needs user authorization. Repo: `https://github.com/Hashleemy/manuela-maria` (private). Run: `git init && git add . && git commit -m "Initial commit — full site implementation" && git remote add origin https://github.com/Hashleemy/manuela-maria.git && git push -u origin main`
+- [x] Git repo pushed — live at `https://github.com/Hashleemy/manu-web` (public, branch `master`)
 - [!] Connect repo to Netlify — blocked on git push. Platform decision: **Netlify** (required for Netlify Forms; Vercel would need a different form backend). See comms.md.
 - [x] Configure build: command `npm run build`, output dir `dist/`
   - Created `netlify.toml` with build config + security headers + asset cache headers.
@@ -345,11 +350,11 @@ Agents may work both tracks in parallel. Check for cross-track dependencies note
 - [x] HTTPS auto-enabled on Vercel/Netlify ✅
 - [x] Configure form backend environment variables if using Formspree
   - Not needed — using Netlify Forms (zero env vars required). ✅
-- [!] Post-deploy: verify with Playwright MCP — screenshot all 9 sections — blocked on deployment + FE sections being built
-- [!] Smoke test: form submission, language toggle, all nav links — blocked on deployment
+- [x] Pre-deploy: Playwright full-page screenshots of all 9 sections, desktop + mobile, EN + ES (2026-10-13). Re-run post-deploy against the live URL.
+- [x] Smoke test (local preview, 2026-10-13): language toggle switches `<html lang>`, `<title>`, localStorage and content; all 5 nav anchors resolve; mobile drawer opens with aria-expanded=true; empty-form submit shows 3 bilingual errors. Real submission to Netlify Forms still needs the live deploy.
 
 #### BE-4 new sub-tasks discovered
-- [ ] USER ACTION REQUIRED: `git init`, commit, push to GitHub/Hashleemy, connect to Netlify
+- [ ] USER ACTION REQUIRED: connect `Hashleemy/manu-web` to Netlify (base directory `molecular-meteorite`, build `npm run build`, publish `dist` — netlify.toml already in place). Git push is done.
 - [ ] After Netlify connected: enable Netlify Forms in dashboard (Forms tab → verify "contact" form detected)
 - [ ] After deployment: set up Netlify form email notification to Manuela's email (contact.malemi@gmail.com)
 

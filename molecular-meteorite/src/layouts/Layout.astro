@@ -53,7 +53,7 @@ const jsonLd = {
 ---
 
 <!doctype html>
-<html lang={lang} class="scroll-smooth">
+<html lang={lang} class="scroll-smooth" data-title-en={title} data-title-es={titleEs}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -95,6 +95,8 @@ const jsonLd = {
         if (lang === 'es') {
           document.documentElement.classList.add('is-es');
           document.documentElement.setAttribute('lang', 'es');
+          var t = document.documentElement.getAttribute('data-title-es');
+          if (t) document.title = t;
         }
       })();
     </script>
@@ -102,10 +104,19 @@ const jsonLd = {
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Loaded as a preload and promoted to a stylesheet on arrival so the font CSS never blocks first paint (BE-3). -->
     <link
+      rel="preload"
+      as="style"
       href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap"
-      rel="stylesheet"
+      onload="this.onload=null;this.rel='stylesheet'"
     />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap"
+      />
+    </noscript>
 
     <!-- JSON-LD structured data (BE-1) -->
     <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)}></script>

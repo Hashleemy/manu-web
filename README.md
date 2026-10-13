@@ -48,7 +48,7 @@ The one-sentence north star:
 ├── tasks.md              # Full build task board (6 phases)
 ├── comms.md              # Agent communication & decision log
 ├── recap.md              # Session recap
-└── manuela-maria/        # Astro project
+└── molecular-meteorite/  # Astro project
     ├── src/
     │   ├── components/   # UI + section components
     │   ├── layouts/      # Base layout
@@ -66,7 +66,7 @@ The one-sentence north star:
 ## Getting Started
 
 ```bash
-cd manuela-maria
+cd molecular-meteorite
 npm install
 npm run dev
 ```
